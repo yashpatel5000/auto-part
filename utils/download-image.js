@@ -1,15 +1,9 @@
-import fs from "fs";
 import puppeteer from "puppeteer";
-
-const getFileName = (url) => {
-  const file = url.split("/").pop();
-  const [name, ext] = file.split(/\.(?=[^\.]+$)/);
-  return `${name}.${ext.toLowerCase()}`;
-};
+import { uploadBufferToS3 } from "./aws.js";
+import { SIGNED_URL_CONTENT_TYPE } from "./constant.js";
 
 const downloadImage = async (url) => {
-  const fileName = getFileName(url);
-  const filePath = `public/images/${fileName}`;
+  const fileName = `${Date.now()}.jpeg`;
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -29,13 +23,14 @@ const downloadImage = async (url) => {
   }
 
   const buffer = await response.buffer();
-  fs.writeFileSync(filePath, buffer);
-  console.log(`✅ Saved: ${filePath} (${buffer.length} bytes)`);
+
+  await uploadBufferToS3(buffer,fileName,SIGNED_URL_CONTENT_TYPE[url.split('.').pop()]);
 
   await browser.close();
+ 
   return {
-    filename: `https://8946-1-38-234-23.ngrok-free.app/${fileName}`,
-    filePath
+    filePath: `https://auto-part.s3.eu-north-1.amazonaws.com/${fileName}`,
+    fileName
   };
 };
 

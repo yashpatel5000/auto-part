@@ -1,4 +1,3 @@
-import fs from "fs";
 import axios from "axios";
 import dotenv from "dotenv";
 import connectDB from "./db.js";
@@ -6,6 +5,7 @@ import express from "express";
 import downloadImage from "./utils/download-image.js";
 import { productCreate, createVariantQuery } from "./graphql/mutation.js";
 import { shopifyGraphQLRequest } from "./utils/shopify-axios.js";
+import { deleteMedias } from "./utils/aws.js";
 
 dotenv.config();
 
@@ -37,11 +37,11 @@ async function processImage(part) {
             originalSource: image,
           };
         } else {
-          const { filename , filePath } = await downloadImage(image);
-          filePaths.push(filePath);
+          const { fileName, filePath } = await downloadImage(image);
+          filePaths.push(fileName);
           return {
             mediaContentType: "IMAGE",
-            originalSource: filename,
+            originalSource: filePath,
           };
         }
       })
@@ -60,12 +60,12 @@ async function processImage(part) {
         },
       ];
     } else {
-      const { filename , filePath } = downloadImage(part.photo);
-      filePaths.push(filePath);
+      const { fileName, filePath } = downloadImage(part.photo);
+      filePaths.push(fileName);
       part.part_photo_gallery = [
         {
           mediaContentType: "IMAGE",
-          originalSource: filename,
+          originalSource: filePath,
         },
       ];
     }
@@ -73,7 +73,7 @@ async function processImage(part) {
 
   return {
     part,
-    filePaths
+    filePaths,
   };
 }
 
@@ -123,8 +123,9 @@ async function insertDataIntoShopify() {
         }
 
         const res = await processImage(part);
-
         part = res.part;
+
+        console.log(`Media uploaded to s3 for part : ${part.id}.`)
 
         const safeTitle = part.name || "No Title";
         const safeNotes = part.notes || "No description";
@@ -143,10 +144,8 @@ async function insertDataIntoShopify() {
             variables,
           });
 
-          
-          res.filePaths.forEach(media => {
-            fs.unlinkSync(media);
-          });
+          await deleteMedias(res.filePaths);
+          console.log(`Media deleted from s3 for part id : ${part.id}`);
 
           const productId = productResponse.data.data.productCreate.product.id;
           const variantId =
@@ -197,6 +196,10 @@ async function insertDataIntoShopify() {
 }
 
 app.listen(3000, async () => {
-  console.log("App started.");
-  await insertDataIntoShopify();
+  try {
+    console.log("App started.");
+    await insertDataIntoShopify();
+  } catch (error) {
+    console.log(error);
+  }
 });
