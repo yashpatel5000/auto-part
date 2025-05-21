@@ -33,3 +33,16 @@ export const createVariantQuery = `
             }
         }
     }`;
+
+export const productUpdate = `
+    mutation productUpdate($input: ProductUpdateInput!) {
+        productUpdate(product: $input) {
+            product {
+                id
+              }
+            userErrors {
+                field
+                message
+            }
+        }
+    }`;
