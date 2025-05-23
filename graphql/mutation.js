@@ -20,12 +20,15 @@ export const productCreate = `
     }`;
 
 export const createVariantQuery = `
-    mutation productVariantsBulkUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
-        productVariantsBulkUpdate(productId: $productId, variants: $variants) {
+    mutation productVariantsBulkCreate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+        productVariantsBulkCreate(productId: $productId, variants: $variants) {
             productVariants {
                 id
                 price
                 barcode
+                inventoryItem{
+                    id
+                }
             }
             userErrors {
                 field
@@ -46,3 +49,17 @@ export const productUpdate = `
             }
         }
     }`;
+
+export const inventoryAdjustQuantity = `
+mutation inventoryAdjustQuantities($input:  InventoryAdjustQuantitiesInput!) {
+  inventoryAdjustQuantities(input: $input) {
+    inventoryAdjustmentGroup{
+        id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`;

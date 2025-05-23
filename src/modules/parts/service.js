@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import axios from "axios";
-
+import fs from "fs";
 import connectDB from "../../../db.js";
 import { partsEndpoint } from "../../../utils/constant.js";
 import { deleteMedias } from "../../../utils/aws.js";
@@ -10,6 +10,8 @@ import {
   productCreate,
   createVariantQuery,
 } from "../../../graphql/mutation.js";
+import logger from "../../../utils/logger.js";
+import { getLocation, getOptionId } from "../../../graphql/query.js";
 
 dotenv.config();
 
@@ -76,31 +78,93 @@ export async function insertDataIntoShopify() {
       const allParts = response.data.data;
 
       for await (let part of allParts) {
-        const exists = await db.collection("rrr-parts").findOne({ id: part.id });
-
-        if (exists) {
-          console.log(`ℹ️ Part ID ${part.id} already exists in Shopify.`);
-          continue;
-        }
-
-        let imageProcessing = null;
-
-        if (part?.part_photo_gallery?.length || part?.photo) {
-          imageProcessing = await processImage(part);
-          part = imageProcessing.part;
-          console.log(`📷 Media processed for Part ID ${part.id}`);
-        }
-
-        const productInput = {
-          input: {
-            title: part.name || "No Title",
-            descriptionHtml: part.notes || "No description",
-            tags: ["parts"],
-          },
-          media: part.part_photo_gallery,
-        };
-
         try {
+          const exists = await db
+            .collection("rrr-parts")
+            .findOne({ id: part.id });
+
+          if (exists) {
+            console.log(`ℹ️ Part ID ${part.id} already exists in Shopify.`);
+            continue;
+          }
+
+          let imageProcessing = null;
+
+          if (part?.part_photo_gallery?.length || part?.photo) {
+            imageProcessing = await processImage(part);
+            part = imageProcessing.part;
+            console.log(`📷 Media processed for Part ID ${part.id}`);
+          }
+
+          const carModelResponse = await axios.post(
+            `https://api.rrr.lt/get/car/${part.car_id}`,
+            formData
+          );
+          const car_model_id = carModelResponse.data.list[0][0].car_model;
+          const car_models = await axios.post(
+            "https://api.rrr.lt/get/car_models",
+            formData
+          );
+          const carResponse = car_models.data.list.filter((model) => {
+            return model.id === car_model_id.toString();
+          });
+          const brandNameResponse = await axios.post(
+            "https://api.rrr.lt/get/car_brands",
+            formData
+          );
+          const brandNames = brandNameResponse.data.list.filter((brand) => {
+            return brand.id === carResponse[0].brand;
+          });
+          const partCategoriesResponse = await axios.post(
+            "https://api.rrr.lt/get/categories",
+            formData
+          );
+          const categories = partCategoriesResponse.data.list.filter(
+            (category) => {
+              return part.category_id === category.id;
+            }
+          );
+          const metafields = [
+            {
+              namespace: "custom",
+              key: "year",
+              type: "single_line_text_field",
+              value: `${carResponse[0].year_start}-${carResponse[0].year_end}`,
+            },
+            {
+              namespace: "custom",
+              key: "car",
+              type: "single_line_text_field",
+              value: brandNames[0].name,
+            },
+            {
+              namespace: "custom",
+              key: "part_number",
+              type: "single_line_text_field",
+              value: part.id,
+            },
+            {
+              namespace: "custom",
+              key: "model",
+              type: "single_line_text_field",
+              value: carResponse[0].name,
+            },
+            {
+              namespace: "custom",
+              key: "product_type",
+              type: "single_line_text_field",
+              value: categories[0].en,
+            },
+          ];
+          const productInput = {
+            input: {
+              title: part.name || "No Title",
+              descriptionHtml: part.notes || "No description",
+              tags: ["parts"],
+              metafields
+            },
+            media: part.part_photo_gallery,
+          };
           const productResponse = await shopifyGraphQLRequest({
             query: productCreate,
             variables: productInput,
@@ -108,15 +172,38 @@ export async function insertDataIntoShopify() {
 
           const product = productResponse.data.data.productCreate.product;
           const productId = product.id;
-          const variantId = product.variants.edges[0].node.id;
+          const locationResponse = await shopifyGraphQLRequest({
+            query: getLocation(),
+            variables: {},
+          });
+          const optionResponse = await shopifyGraphQLRequest({
+            query: getOptionId(),
+            variables: {
+              id: product.id,
+            },
+          });
+          
+          const locationId =
+            locationResponse.data.data.locations.edges[0].node.id;
 
           const variantInput = {
             productId,
             variants: [
               {
-                id: variantId,
                 price: part.original_price || "0.00",
                 barcode: part.manufacturer_code || "",
+                optionValues: [
+                  {
+                    optionId: optionResponse.data.data.product.options[0].id,
+                    name: part.name,
+                  },
+                ],
+                ...(part.status === "0" && {
+                  inventoryQuantities: {
+                    locationId,
+                    availableQuantity: 100,
+                  },
+                }),
               },
             ],
           };
@@ -125,12 +212,12 @@ export async function insertDataIntoShopify() {
             query: createVariantQuery,
             variables: variantInput,
           });
-
           await db.collection("rrr-parts").insertOne(part);
 
           await db.collection("shopify-parts").insertOne({
             ...product,
-            ...variantResponse.data.data.productVariantsBulkUpdate.productVariants[0],
+            ...variantResponse.data.data.productVariantsBulkCreate
+              .productVariants[0],
             rrr_partId: part.id,
             media: part.part_photo_gallery,
             shopifyProductId: productId,
@@ -143,9 +230,14 @@ export async function insertDataIntoShopify() {
 
           console.log(`✅ Part ID ${part.id} successfully stored in Shopify.`);
         } catch (error) {
-          console.error(`❌ Error creating product/variant: ${error.message}`);
+          console.log(error);
+          logger.error(`Unable to store part Id : ${part.id} into shopify.`);
+          logger.error("Reason: ", JSON.stringify(error, null, 2));
+          continue;
         }
       }
+
+      fs.writeFileSync("last-page.txt",page);      
     }
   } catch (err) {
     console.error(`❌ API Error: ${err.message}`);
