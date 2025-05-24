@@ -1,5 +1,4 @@
 import axios from "axios";
-import fs from "fs";
 import connectDB from "../../../db.js";
 import { CURRENT_PARTS, partsEndpoint } from "../../../utils/constant.js";
 import { deleteMedias } from "../../../utils/aws.js";
@@ -239,11 +238,9 @@ export async function insertDataIntoShopify() {
           continue;
         }
       }
-
-      fs.writeFileSync("last-page.txt", page);
     }
   } catch (err) {
-    console.error(`❌ API Error: ${err.message}`);
+    logger.error(`❌ API Error: ${err.message}`,err);
     throw err;
   }
 }
