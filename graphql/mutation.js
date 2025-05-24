@@ -4,12 +4,20 @@ export const productCreate = `
             product {
                 id
                 title
+                description
                 variants(first: 1) {
                   edges {
                     node {
                       id
                     }
                   }
+                }
+                media(first: 250){
+                    edges{
+                        node{
+                            id
+                        }
+                    }
                 }
               }
             userErrors {
@@ -22,6 +30,24 @@ export const productCreate = `
 export const createVariantQuery = `
     mutation productVariantsBulkCreate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
         productVariantsBulkCreate(productId: $productId, variants: $variants) {
+            productVariants {
+                id
+                price
+                barcode
+                inventoryItem{
+                    id
+                }
+            }
+            userErrors {
+                field
+                message
+            }
+        }
+    }`;
+
+export const updateVariantQuery = `
+    mutation productVariantsBulkUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+        productVariantsBulkUpdate(productId: $productId, variants: $variants) {
             productVariants {
                 id
                 price
@@ -63,3 +89,14 @@ mutation inventoryAdjustQuantities($input:  InventoryAdjustQuantitiesInput!) {
   }
 }
 `;
+
+export const productDeleteMedia = `
+mutation productDeleteMedia($productId: ID!, $mediaIds: [ID!]!) {
+  productDeleteMedia(productId: $productId, mediaIds: $mediaIds) {
+    deletedMediaIds
+    userErrors {
+      field
+      message
+    }
+  }
+}`;

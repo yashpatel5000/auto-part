@@ -3,3 +3,5 @@ export const SIGNED_URL_CONTENT_TYPE = {
 }
 
 export const partsEndpoint = "https://api.rrr.lt/v2/get/parts";
+
+export const CURRENT_PARTS = 25900;

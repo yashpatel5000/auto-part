@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
 import axios from "axios";
 import fs from "fs";
 import connectDB from "../../../db.js";
-import { partsEndpoint } from "../../../utils/constant.js";
+import { CURRENT_PARTS, partsEndpoint } from "../../../utils/constant.js";
 import { deleteMedias } from "../../../utils/aws.js";
 import downloadImage from "../../../utils/download-image.js";
 import { shopifyGraphQLRequest } from "../../../utils/shopify-axios.js";
@@ -12,13 +11,13 @@ import {
 } from "../../../graphql/mutation.js";
 import logger from "../../../utils/logger.js";
 import { getLocation, getOptionId } from "../../../graphql/query.js";
+import { config } from "../../../config.js";
 
-dotenv.config();
 
 const partsApiAuth = {
-  username: process.env.PARTS_API_USER_NAME,
-  password: process.env.PARTS_API_PASSWORD,
-  user_token: process.env.PARTS_API_USER_TOKEN,
+  username: config.PARTS_API_USER_NAME,
+  password: config.PARTS_API_PASSWORD,
+  user_token: config.PARTS_API_USER_TOKEN,
 };
 
 async function processImage(part) {
@@ -61,10 +60,10 @@ export async function insertDataIntoShopify() {
   try {
     const db = await connectDB();
     const limit = 100;
-    const totalPages = Math.ceil(25900 / limit);
+    const totalPages = Math.ceil(CURRENT_PARTS / limit);
 
     for (let page = 1; page <= totalPages; page++) {
-      console.log(`📥 Fetching products for page ${page}`);
+      logger.info(`📥 Fetching products for page ${page}`);
 
       const formData = new URLSearchParams();
       formData.append("username", partsApiAuth.username);
@@ -84,7 +83,7 @@ export async function insertDataIntoShopify() {
             .findOne({ id: part.id });
 
           if (exists) {
-            console.log(`ℹ️ Part ID ${part.id} already exists in Shopify.`);
+            logger.info(`ℹ️ Part ID ${part.id} already exists in Shopify.`);
             continue;
           }
 
@@ -93,7 +92,7 @@ export async function insertDataIntoShopify() {
           if (part?.part_photo_gallery?.length || part?.photo) {
             imageProcessing = await processImage(part);
             part = imageProcessing.part;
-            console.log(`📷 Media processed for Part ID ${part.id}`);
+            logger.info(`📷 Media processed for Part ID ${part.id}`);
           }
 
           const carModelResponse = await axios.post(
@@ -161,7 +160,7 @@ export async function insertDataIntoShopify() {
               title: part.name || "No Title",
               descriptionHtml: part.notes || "No description",
               tags: ["parts"],
-              metafields
+              metafields,
             },
             media: part.part_photo_gallery,
           };
@@ -182,7 +181,7 @@ export async function insertDataIntoShopify() {
               id: product.id,
             },
           });
-          
+
           const locationId =
             locationResponse.data.data.locations.edges[0].node.id;
 
@@ -190,7 +189,7 @@ export async function insertDataIntoShopify() {
             productId,
             variants: [
               {
-                price: part.original_price || "0.00",
+                price: part.original_price || part.price || "0.00",
                 barcode: part.manufacturer_code || "",
                 optionValues: [
                   {
@@ -208,6 +207,11 @@ export async function insertDataIntoShopify() {
             ],
           };
 
+          const metafieldValues = metafields.reduce((acc, field) => {
+            acc[field.key] = field.value;
+            return acc;
+          }, {});
+
           const variantResponse = await shopifyGraphQLRequest({
             query: createVariantQuery,
             variables: variantInput,
@@ -219,25 +223,24 @@ export async function insertDataIntoShopify() {
             ...variantResponse.data.data.productVariantsBulkCreate
               .productVariants[0],
             rrr_partId: part.id,
-            media: part.part_photo_gallery,
             shopifyProductId: productId,
+            metafields: metafieldValues,
           });
 
           if (imageProcessing?.filePaths) {
             await deleteMedias(imageProcessing.filePaths);
-            console.log(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
+            logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
           }
 
-          console.log(`✅ Part ID ${part.id} successfully stored in Shopify.`);
+          logger.info(`✅ Part ID ${part.id} successfully stored in Shopify.`);
         } catch (error) {
-          console.log(error);
           logger.error(`Unable to store part Id : ${part.id} into shopify.`);
           logger.error("Reason: ", JSON.stringify(error, null, 2));
           continue;
         }
       }
 
-      fs.writeFileSync("last-page.txt",page);      
+      fs.writeFileSync("last-page.txt", page);
     }
   } catch (err) {
     console.error(`❌ API Error: ${err.message}`);

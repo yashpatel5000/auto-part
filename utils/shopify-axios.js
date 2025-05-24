@@ -1,4 +1,5 @@
 import axios from "axios";
+import { config } from "../config.js";
 
 export const shopifyGraphQLRequest = async (body) => {
   try {
@@ -7,7 +8,7 @@ export const shopifyGraphQLRequest = async (body) => {
       JSON.stringify(body),
       {
         headers: {
-          "X-Shopify-Access-Token": process.env.SHOPIFY_ACCESS_TOKEN,
+          "X-Shopify-Access-Token": config.SHOPIFY_ACCESS_TOKEN,
           "Content-Type": "application/json",
         },
       }
