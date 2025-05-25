@@ -235,7 +235,7 @@ const insertSinglePartToShopify = async (part, db) => {
     logger.info(`✅ Part ID ${part.id} successfully stored in Shopify.`);
   } catch (error) {
     logger.error(`Error inserting part ID ${part.id}: ${error.message}`);
-    logger.error(error)
+    logger.error(error);
   }
 };
 
@@ -243,6 +243,10 @@ async function updatePartInShopify(part, existingEntry, db) {
   try {
     let imageProcessing = null;
     if (part?.part_photo_gallery?.length || part?.photo) {
+      imageProcessing = await processImage(part);
+      part = imageProcessing.part;
+      logger.info(`📷 Media processed for Part ID ${part.id}`);
+
       const mediaIds = existingEntry.media.edges.map((edge) => edge.node.id);
       await shopifyGraphQLRequest({
         query: productDeleteMedia,
@@ -252,10 +256,6 @@ async function updatePartInShopify(part, existingEntry, db) {
         },
       });
       logger.info(`Old images deleted for part : ${part.id}.`);
-      
-      imageProcessing = await processImage(part);
-      part = imageProcessing.part;
-      logger.info(`📷 Media processed for Part ID ${part.id}`);
     }
 
     const { carResponse, brandNames, categories } = await fetchCarData(part);
@@ -335,7 +335,7 @@ async function updatePartInShopify(part, existingEntry, db) {
             ...(metafields.length && { metafields }),
             title: part.name || "No Title",
             descriptionHtml: part.notes || "No description",
-            status: "ACTIVE"
+            status: "ACTIVE",
           },
           media: part.part_photo_gallery,
         },
@@ -443,7 +443,7 @@ export const scheduleDailyJob = async () => {
               `Error While Running Cron Job for part : ${part.id}`,
               error
             );
-            logger.error(error)
+            logger.error(error);
             continue;
           }
         }
@@ -479,6 +479,5 @@ export const scheduleDailyJob = async () => {
     }
   } catch (error) {
     logger.error(`Fatal error in scheduleDailyJob: ${error.message}`);
-
   }
 };
