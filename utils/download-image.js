@@ -26,7 +26,7 @@ const downloadImage = async (url) => {
       response ? response.status() : "no response"
     );
     await browser.close();
-    return null;
+    throw new Error("Failed to load image : 403");
   }
 
   const buffer = await response.buffer();

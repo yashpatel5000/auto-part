@@ -59,6 +59,7 @@ async function processImage(part) {
     logger.error(
       `Error processing images for Part ID ${part.id}: ${error.message}`
     );
+    throw error;
   }
 
   return { part, filePaths };
@@ -403,8 +404,7 @@ async function updatePartInShopify(part, existingEntry, db) {
       logger.info(`✅ Part ID ${part.id} successfully updated in Shopify.`);
     }
   } catch (error) {
-    logger.error(`Error updating part ID ${part.id}: ${error.message}`);
-    logger.error(error);
+    throw error;
   }
 }
 
