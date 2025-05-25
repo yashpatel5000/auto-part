@@ -317,7 +317,6 @@ async function updatePartInShopify(part, existingEntry, db) {
         value: `${carResponse.year_start}-${carResponse.year_end}`,
       });
     }
-
     if (
       metafields.length > 0 ||
       part.name !== existingEntry.title ||
@@ -328,7 +327,8 @@ async function updatePartInShopify(part, existingEntry, db) {
       part?.part_photo_gallery?.length ||
       part?.photo
     ) {
-      await shopifyGraphQLRequest({
+      
+      const response = await shopifyGraphQLRequest({
         query: productUpdate,
         variables: {
           input: {
@@ -378,12 +378,13 @@ async function updatePartInShopify(part, existingEntry, db) {
           metafieldForDB[field.key] = field.value; // override or insert
         });
       }
-
+      
       await db.collection("shopify-parts").updateOne(
         { rrr_partId: part.id },
         {
           $set: {
             ...existingEntry,
+            ...response.data.data.productUpdate.product,
             ...variantResponse.data.data.productVariantsBulkUpdate
               .productVariants[0],
             metafields: metafieldForDB,

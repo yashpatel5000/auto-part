@@ -64,10 +64,26 @@ export const updateVariantQuery = `
     }`;
 
 export const productUpdate = `
-    mutation productUpdate($input: ProductUpdateInput!) {
-        productUpdate(product: $input) {
+    mutation productUpdate($input: ProductUpdateInput!,$media: [CreateMediaInput!]) {
+        productUpdate(product: $input, media: $media) {
             product {
                 id
+                title
+                description
+                variants(first: 1) {
+                  edges {
+                    node {
+                      id
+                    }
+                  }
+                }
+                media(first: 250){
+                    edges{
+                        node{
+                            id
+                        }
+                    }
+                }
               }
             userErrors {
                 field
