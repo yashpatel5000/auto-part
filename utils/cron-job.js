@@ -236,7 +236,6 @@ const insertSinglePartToShopify = async (part, db) => {
     logger.info(`✅ Part ID ${part.id} successfully stored in Shopify.`);
   } catch (error) {
     logger.error(`Error inserting part ID ${part.id}: ${error.message}`);
-    logger.error(error);
   }
 };
 
@@ -444,7 +443,6 @@ export const scheduleDailyJob = async () => {
               `Error While Running Cron Job for part : ${part.id}`,
               error
             );
-            logger.error(error);
             continue;
           }
         }

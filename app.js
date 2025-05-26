@@ -24,6 +24,6 @@ app.listen(3000, async () => {
     }
     await insertDataIntoShopify();
   } catch (error) {
-    logger.error(error);
+    logger.error("App Crashed.");
   }
 });

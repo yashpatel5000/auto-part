@@ -234,8 +234,7 @@ export async function insertDataIntoShopify() {
           logger.info(`✅ Part ID ${part.id} successfully stored in Shopify.`);
         } catch (error) {
           logger.error(`Unable to store part Id : ${part.id} into shopify.`);
-          logger.error("Reason: ", error);
-          logger.error(error);
+          logger.error("Reason: ", error.message);
           continue;
         }
       }

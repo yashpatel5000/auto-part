@@ -82,7 +82,6 @@ export class Service {
         body.event.event_data.part_id,
         { error: error.message }
       );
-      logger.error(error);
     }
   }
 }
