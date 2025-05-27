@@ -57,7 +57,7 @@ export async function insertDataIntoShopify() {
     const limit = 100;
     const totalPages = Math.ceil(CURRENT_PARTS / limit);
 
-    for (let page = 1; page <= totalPages; page++) {
+    for (let page = 1; page <= 1; page++) {
       logger.info(`📥 Fetching products for page ${page}`);
 
       const formData = new URLSearchParams();
