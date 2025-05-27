@@ -1,5 +1,4 @@
 import connectDB from "../db.js";
-import dotenv from "dotenv";
 import downloadImage from "./download-image.js";
 import { getLocation, getOptionId } from "../graphql/query.js";
 import {
@@ -15,8 +14,6 @@ import axios from "axios";
 import { partsEndpoint } from "./constant.js";
 import { deleteMedias } from "./aws.js";
 import { config } from "../config.js";
-
-dotenv.config();
 
 const formData = new URLSearchParams();
 formData.append("username", config.PARTS_API_USER_NAME);
@@ -153,9 +150,21 @@ const insertSinglePartToShopify = async (part, db) => {
         namespace: "custom",
         key: "product_type",
         type: "single_line_text_field",
-        value: categories.en,
+        value: categories.lv,
       },
     ];
+
+    const locationResponse = await shopifyGraphQLRequest({
+      query: getLocation(),
+      variables: {},
+    });
+
+    const locationId = locationResponse.data.data.locations.edges[0].node.id;
+
+    const publicationIdResponse = await shopifyGraphQLRequest({
+      query: `query { publications(first: 5) { edges { node { id name } } } }`,
+      variables: {},
+    });
 
     const productInput = {
       input: {
@@ -163,6 +172,26 @@ const insertSinglePartToShopify = async (part, db) => {
         descriptionHtml: part.notes || "No description",
         tags: ["parts"],
         metafields,
+        publications: [
+          {
+            publicationId:
+              publicationIdResponse.data.data.publications.edges[0].node.id,
+          },
+        ],
+        variants: [
+          {
+            price: part.original_price || part.price || "0.00",
+            barcode: part.manufacturer_code || "",
+            inventoryManagement: "SHOPIFY",
+            inventoryPolicy: "DENY",
+            ...(part.status === "0" && {
+              inventoryQuantities: {
+                locationId,
+                availableQuantity: 100,
+              },
+            }),
+          },
+        ],
       },
       media: part.part_photo_gallery,
     };
@@ -172,46 +201,13 @@ const insertSinglePartToShopify = async (part, db) => {
       variables: productInput,
     });
 
+    if (productResponse.data.data.productCreate.userErrors.length) {
+      logger.error(`Unable to store part Id : ${part.id} into shopify.`);
+      logger.error("Reason: ", error.message);
+      throw new Error(`Unable to store part Id : ${part.id}`);
+    }
+
     const product = productResponse.data.data.productCreate.product;
-    const productId = product.id;
-
-    const locationResponse = await shopifyGraphQLRequest({
-      query: getLocation(),
-      variables: {},
-    });
-    const optionResponse = await shopifyGraphQLRequest({
-      query: getOptionId(),
-      variables: { id: productId },
-    });
-
-    const locationId = locationResponse.data.data.locations.edges[0].node.id;
-
-    const variantInput = {
-      productId,
-      variants: [
-        {
-          price: part.original_price || "0.00",
-          barcode: part.manufacturer_code || "",
-          optionValues: [
-            {
-              optionId: optionResponse.data.data.product.options[0].id,
-              name: part.name,
-            },
-          ],
-          ...(part.status === "0" && {
-            inventoryQuantities: {
-              locationId,
-              availableQuantity: 100,
-            },
-          }),
-        },
-      ],
-    };
-
-    const variantResponse = await shopifyGraphQLRequest({
-      query: createVariantQuery,
-      variables: variantInput,
-    });
 
     const metafieldValues = metafields.reduce((acc, field) => {
       acc[field.key] = field.value;
@@ -222,13 +218,11 @@ const insertSinglePartToShopify = async (part, db) => {
 
     await db.collection("shopify-parts").insertOne({
       ...product,
-      ...variantResponse.data.data.productVariantsBulkCreate.productVariants[0],
       rrr_partId: part.id,
-      shopifyProductId: productId,
       metafields: metafieldValues,
     });
 
-    if (imageProcessing?.filePaths?.length) {
+    if (imageProcessing?.filePaths) {
       await deleteMedias(imageProcessing.filePaths);
       logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
     }
@@ -252,7 +246,7 @@ async function updatePartInShopify(part, existingEntry, db) {
         query: productDeleteMedia,
         variables: {
           mediaIds,
-          productId: existingEntry.shopifyProductId,
+          productId: existingEntry.id,
         },
       });
       logger.info(`Old images deleted for part : ${part.id}.`);
@@ -269,55 +263,42 @@ async function updatePartInShopify(part, existingEntry, db) {
 
     const metafields = [];
 
-    if (existingEntry.metafields.car !== brandNames.name) {
-      metafields.push({
-        namespace: "custom",
-        key: "car",
-        type: "single_line_text_field",
-        value: brandNames.name,
-      });
-    }
+    metafields.push({
+      namespace: "custom",
+      key: "car",
+      type: "single_line_text_field",
+      value: brandNames.name,
+    });
 
-    if (existingEntry.metafields.part_number !== part.id) {
-      metafields.push({
-        namespace: "custom",
-        key: "part_number",
-        type: "single_line_text_field",
-        value: part.id,
-      });
-    }
+    metafields.push({
+      namespace: "custom",
+      key: "part_number",
+      type: "single_line_text_field",
+      value: part.id,
+    });
 
-    if (existingEntry.metafields.product_type !== categories.en) {
-      metafields.push({
-        namespace: "custom",
-        key: "product_type",
-        type: "single_line_text_field",
-        value: categories.en,
-      });
-    }
+    metafields.push({
+      namespace: "custom",
+      key: "product_type",
+      type: "single_line_text_field",
+      value: categories.en,
+    });
 
-    if (existingEntry.metafields.model !== carResponse.name) {
-      metafields.push({
-        namespace: "custom",
-        key: "model",
-        type: "single_line_text_field",
-        value: carResponse.name,
-      });
-    }
+    metafields.push({
+      namespace: "custom",
+      key: "model",
+      type: "single_line_text_field",
+      value: carResponse.name,
+    });
+
+    metafields.push({
+      namespace: "custom",
+      key: "year",
+      type: "single_line_text_field",
+      value: `${carResponse.year_start}-${carResponse.year_end}`,
+    });
 
     if (
-      existingEntry.metafields.year !==
-      `${carResponse.year_start}-${carResponse.year_end}`
-    ) {
-      metafields.push({
-        namespace: "custom",
-        key: "year",
-        type: "single_line_text_field",
-        value: `${carResponse.year_start}-${carResponse.year_end}`,
-      });
-    }
-    if (
-      metafields.length > 0 ||
       part.name !== existingEntry.title ||
       part.price !== existingEntry.price ||
       part.manufacturer_code !== existingEntry.barcode ||
@@ -326,49 +307,42 @@ async function updatePartInShopify(part, existingEntry, db) {
       part?.part_photo_gallery?.length ||
       part?.photo
     ) {
-      
       const response = await shopifyGraphQLRequest({
         query: productUpdate,
         variables: {
           input: {
-            id: existingEntry.shopifyProductId,
-            ...(metafields.length && { metafields }),
+            id: existingEntry.id,
+            metafields,
             title: part.name || "No Title",
             descriptionHtml: part.notes || "No description",
             status: "ACTIVE",
+            variants: [
+              {
+                id: existingEntry.variants.edges[0].node.id,
+                price: part.original_price || part.price || "0.00",
+                barcode: "xyz" || "",
+              },
+            ],
           },
           media: part.part_photo_gallery,
         },
       });
 
-      const optionResponse = await shopifyGraphQLRequest({
-        query: getOptionId(),
-        variables: {
-          id: existingEntry.shopifyProductId,
-        },
-      });
+      // const variantInput = {
+      //   productId: existingEntry.shopifyProductId,
+      //   variants: [
+      //     {
+      //       id: existingEntry.variants.edges[0].node.id,
+      //       price: part.original_price || part.price || "0.00",
+      //       barcode: part.manufacturer_code || "",
+      //     },
+      //   ],
+      // };
 
-      const variantInput = {
-        productId: existingEntry.shopifyProductId,
-        variants: [
-          {
-            id: existingEntry.id,
-            price: part.original_price || part.price || "0.00",
-            barcode: part.manufacturer_code || "",
-            optionValues: [
-              {
-                optionId: optionResponse.data.data.product.options[0].id,
-                name: part.name,
-              },
-            ],
-          },
-        ],
-      };
-
-      const variantResponse = await shopifyGraphQLRequest({
-        query: updateVariantQuery,
-        variables: variantInput,
-      });
+      // const variantResponse = await shopifyGraphQLRequest({
+      //   query: updateVariantQuery,
+      //   variables: variantInput,
+      // });
 
       let metafieldForDB = { ...existingEntry.metafields };
 
@@ -377,15 +351,13 @@ async function updatePartInShopify(part, existingEntry, db) {
           metafieldForDB[field.key] = field.value; // override or insert
         });
       }
-      
+
       await db.collection("shopify-parts").updateOne(
         { rrr_partId: part.id },
         {
           $set: {
             ...existingEntry,
             ...response.data.data.productUpdate.product,
-            ...variantResponse.data.data.productVariantsBulkUpdate
-              .productVariants[0],
             metafields: metafieldForDB,
             title: part.name,
             description: part.description,
@@ -464,7 +436,7 @@ export const scheduleDailyJob = async () => {
           query: productUpdate,
           variables: {
             input: {
-              id: deleted.shopifyProductId,
+              id: deleted.id,
               status: "DRAFT",
             },
           },

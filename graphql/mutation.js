@@ -1,6 +1,6 @@
 export const productCreate = `
-    mutation productCreate($input: ProductCreateInput!, $media: [CreateMediaInput!]) {
-        productCreate(product: $input, media: $media) {
+    mutation productCreate($input: ProductInput!, $media: [CreateMediaInput!]) {
+        productCreate(input: $input, media: $media) {
             product {
                 id
                 title
@@ -9,6 +9,10 @@ export const productCreate = `
                   edges {
                     node {
                       id
+                      inventoryQuantity
+                      inventoryItem{
+                        id
+                      }
                     }
                   }
                 }
@@ -64,8 +68,8 @@ export const updateVariantQuery = `
     }`;
 
 export const productUpdate = `
-    mutation productUpdate($input: ProductUpdateInput!,$media: [CreateMediaInput!]) {
-        productUpdate(product: $input, media: $media) {
+    mutation productUpdate($input: ProductInput!,$media: [CreateMediaInput!]) {
+        productUpdate(input: $input, media: $media) {
             product {
                 id
                 title
@@ -74,6 +78,10 @@ export const productUpdate = `
                   edges {
                     node {
                       id
+                      inventoryQuantity
+                      inventoryItem{
+                        id
+                      }
                     }
                   }
                 }

@@ -17,6 +17,7 @@ export class Service {
         });
 
         if (result) {
+          const inventoryItemId = result.variants.edges[0].node.inventoryItem.id;
           if (event.event_data.status.toLowerCase() === "in_warehouse") {
 
             const locationResponse = await shopifyGraphQLRequest({
@@ -33,7 +34,7 @@ export class Service {
                   reason: "correction",
                   name: "available",
                   changes: {
-                    inventoryItemId: result.inventoryItem.id,
+                    inventoryItemId,
                     delta: +100,
                     locationId
                   },
@@ -44,7 +45,7 @@ export class Service {
           } else {
           
             const inventoryLevel = await shopifyGraphQLRequest({
-              query: getInventoryLevel(result.inventoryItem.id),
+              query: getInventoryLevel(inventoryItemId),
               variables: {},
             });
 
@@ -62,7 +63,7 @@ export class Service {
                   reason: "correction",
                   name: "available",
                   changes: {
-                    inventoryItemId: result.inventoryItem.id,
+                    inventoryItemId,
                     delta:
                       -inventoryLevel.data.data.inventoryItem.inventoryLevels
                         .edges[0].node.quantities[0].quantity,
@@ -78,10 +79,9 @@ export class Service {
       }
     } catch (error) {
       logger.error(
-        "Error processing webhook for part id : ",
-        body.event.event_data.part_id,
-        { error: error.message }
+        `Error processing webhook for part id : ${body.event.event_data.part_id}`
       );
+      logger.error(`Reason : ${error.message}`)
     }
   }
 }

@@ -4,7 +4,7 @@ import { config } from "../config.js";
 export const shopifyGraphQLRequest = async (body) => {
   try {
     const response = await axios.post(
-      `${config.STORE}/admin/api/2025-01/graphql.json`,
+      `${config.STORE}/admin/api/2024-01/graphql.json`,
       JSON.stringify(body),
       {
         headers: {

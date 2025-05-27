@@ -4,14 +4,10 @@ import { CURRENT_PARTS, partsEndpoint } from "../../../utils/constant.js";
 import { deleteMedias } from "../../../utils/aws.js";
 import downloadImage from "../../../utils/download-image.js";
 import { shopifyGraphQLRequest } from "../../../utils/shopify-axios.js";
-import {
-  productCreate,
-  createVariantQuery,
-} from "../../../graphql/mutation.js";
+import { productCreate } from "../../../graphql/mutation.js";
 import logger from "../../../utils/logger.js";
-import { getLocation, getOptionId } from "../../../graphql/query.js";
+import { getLocation } from "../../../graphql/query.js";
 import { config } from "../../../config.js";
-
 
 const partsApiAuth = {
   username: config.PARTS_API_USER_NAME,
@@ -151,79 +147,80 @@ export async function insertDataIntoShopify() {
               namespace: "custom",
               key: "product_type",
               type: "single_line_text_field",
-              value: categories[0].en,
+              value: categories[0].lv,
             },
           ];
+
+          const locationResponse = await shopifyGraphQLRequest({
+            query: getLocation(),
+            variables: {},
+          });
+
+          const locationId =
+            locationResponse.data.data.locations.edges[0].node.id;
+
+          const publicationIdResponse = await shopifyGraphQLRequest({
+            query: `query { publications(first: 5) { edges { node { id name } } } }`,
+            variables: {},
+          });
+
           const productInput = {
             input: {
               title: part.name || "No Title",
               descriptionHtml: part.notes || "No description",
               tags: ["parts"],
               metafields,
+              publications: [
+                {
+                  publicationId:
+                    publicationIdResponse.data.data.publications.edges[0].node
+                      .id,
+                },
+              ],
+              variants: [
+                {
+                  price: part.original_price || part.price || "0.00",
+                  barcode: part.manufacturer_code || "",
+                  inventoryManagement: "SHOPIFY",
+                  inventoryPolicy: "DENY",
+                  ...(part.status === "0" && {
+                    inventoryQuantities: {
+                      locationId,
+                      availableQuantity: 100,
+                    },
+                  }),
+                },
+              ],
             },
             media: part.part_photo_gallery,
           };
+
           const productResponse = await shopifyGraphQLRequest({
             query: productCreate,
             variables: productInput,
           });
+          
+          if (productResponse.data.data.productCreate.userErrors.length) {
+            logger.error(`Unable to store part Id : ${part.id} into shopify.`);
+            logger.error("Reason: ", error.message);
+            continue;
+          }
 
           const product = productResponse.data.data.productCreate.product;
-          const productId = product.id;
-          const locationResponse = await shopifyGraphQLRequest({
-            query: getLocation(),
-            variables: {},
-          });
-          const optionResponse = await shopifyGraphQLRequest({
-            query: getOptionId(),
-            variables: {
-              id: product.id,
-            },
-          });
-
-          const locationId =
-            locationResponse.data.data.locations.edges[0].node.id;
-
-          const variantInput = {
-            productId,
-            variants: [
-              {
-                price: part.original_price || part.price || "0.00",
-                barcode: part.manufacturer_code || "",
-                optionValues: [
-                  {
-                    optionId: optionResponse.data.data.product.options[0].id,
-                    name: part.name,
-                  },
-                ],
-                ...(part.status === "0" && {
-                  inventoryQuantities: {
-                    locationId,
-                    availableQuantity: 100,
-                  },
-                }),
-              },
-            ],
-          };
 
           const metafieldValues = metafields.reduce((acc, field) => {
             acc[field.key] = field.value;
             return acc;
           }, {});
 
-          const variantResponse = await shopifyGraphQLRequest({
-            query: createVariantQuery,
-            variables: variantInput,
-          });
           await db.collection("rrr-parts").insertOne(part);
 
           await db.collection("shopify-parts").insertOne({
             ...product,
-            ...variantResponse.data.data.productVariantsBulkCreate
-              .productVariants[0],
             rrr_partId: part.id,
-            shopifyProductId: productId,
             metafields: metafieldValues,
+            price: part.original_price || part.price || "0.00",
+            barcode: part.manufacturer_code || "",
           });
 
           if (imageProcessing?.filePaths) {
@@ -240,7 +237,7 @@ export async function insertDataIntoShopify() {
       }
     }
   } catch (err) {
-    logger.error(`❌ API Error: ${err.message}`,err);
+    logger.error(`❌ API Error: ${err.message}`, err);
     throw err;
   }
 }
