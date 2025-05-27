@@ -1,5 +1,6 @@
 import axios from "axios";
 import { config } from "../config.js";
+import logger from "./logger.js";
 
 export const shopifyGraphQLRequest = async (body) => {
   try {
@@ -15,7 +16,7 @@ export const shopifyGraphQLRequest = async (body) => {
     );
     return response;
   } catch (error) {
-    console.error("Shopify GraphQL Error:", error.response?.data || error.message);
+    logger.error("Shopify GraphQL Error:", error.response?.data || error.message);
     throw error;
   }
 }

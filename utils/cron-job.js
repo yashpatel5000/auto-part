@@ -221,10 +221,10 @@ const insertSinglePartToShopify = async (part, db) => {
       metafields: metafieldValues,
     });
 
-    if (imageProcessing?.filePaths) {
-      await deleteMedias(imageProcessing.filePaths);
-      logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
-    }
+    // if (imageProcessing?.filePaths) {
+    //   await deleteMedias(imageProcessing.filePaths);
+    //   logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
+    // }
 
     logger.info(`✅ Part ID ${part.id} successfully stored in Shopify.`);
   } catch (error) {
@@ -351,10 +351,10 @@ async function updatePartInShopify(part, existingEntry, db) {
         }
       );
 
-      if (imageProcessing?.filePaths) {
-        await deleteMedias(imageProcessing.filePaths);
-        logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
-      }
+      // if (imageProcessing?.filePaths) {
+      //   await deleteMedias(imageProcessing.filePaths);
+      //   logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
+      // }
 
       logger.info(`✅ Part ID ${part.id} successfully updated in Shopify.`);
     }
