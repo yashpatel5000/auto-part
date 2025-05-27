@@ -35,7 +35,7 @@ export class Service {
                   name: "available",
                   changes: {
                     inventoryItemId,
-                    delta: +100,
+                    delta: +1,
                     locationId
                   },
                 },

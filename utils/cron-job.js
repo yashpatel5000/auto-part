@@ -120,7 +120,6 @@ const insertSinglePartToShopify = async (part, db) => {
       );
       return;
     }
-
     const metafields = [
       {
         namespace: "custom",
@@ -187,7 +186,7 @@ const insertSinglePartToShopify = async (part, db) => {
             ...(part.status === "0" && {
               inventoryQuantities: {
                 locationId,
-                availableQuantity: 100,
+                availableQuantity: 1,
               },
             }),
           },
@@ -281,7 +280,7 @@ async function updatePartInShopify(part, existingEntry, db) {
       namespace: "custom",
       key: "product_type",
       type: "single_line_text_field",
-      value: categories.en,
+      value: categories.lv,
     });
 
     metafields.push({
@@ -327,22 +326,6 @@ async function updatePartInShopify(part, existingEntry, db) {
           media: part.part_photo_gallery,
         },
       });
-
-      // const variantInput = {
-      //   productId: existingEntry.shopifyProductId,
-      //   variants: [
-      //     {
-      //       id: existingEntry.variants.edges[0].node.id,
-      //       price: part.original_price || part.price || "0.00",
-      //       barcode: part.manufacturer_code || "",
-      //     },
-      //   ],
-      // };
-
-      // const variantResponse = await shopifyGraphQLRequest({
-      //   query: updateVariantQuery,
-      //   variables: variantInput,
-      // });
 
       let metafieldForDB = { ...existingEntry.metafields };
 

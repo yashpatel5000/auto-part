@@ -57,7 +57,7 @@ export async function insertDataIntoShopify() {
     const limit = 100;
     const totalPages = Math.ceil(CURRENT_PARTS / limit);
 
-    for (let page = 1; page <= 1; page++) {
+    for (let page = 1; page <= totalPages; page++) {
       logger.info(`📥 Fetching products for page ${page}`);
 
       const formData = new URLSearchParams();
@@ -186,7 +186,7 @@ export async function insertDataIntoShopify() {
                   ...(part.status === "0" && {
                     inventoryQuantities: {
                       locationId,
-                      availableQuantity: 100,
+                      availableQuantity: 1,
                     },
                   }),
                 },
