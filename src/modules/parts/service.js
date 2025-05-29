@@ -123,7 +123,9 @@ export async function insertDataIntoShopify() {
               namespace: "custom",
               key: "year",
               type: "single_line_text_field",
-              value: `${carResponse[0].year_start}-${carResponse[0].year_end}`,
+              value: carResponse[0].year_end
+                ? `${carResponse[0].year_start}-${carResponse[0].year_end}`
+                : `${carResponse[0].year_start}`,
             },
             {
               namespace: "custom",
@@ -199,7 +201,7 @@ export async function insertDataIntoShopify() {
             query: productCreate,
             variables: productInput,
           });
-          
+
           if (productResponse.data.data.productCreate.userErrors.length) {
             logger.error(`Unable to store part Id : ${part.id} into shopify.`);
             logger.error("Reason: ", error.message);

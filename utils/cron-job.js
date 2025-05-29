@@ -125,7 +125,9 @@ const insertSinglePartToShopify = async (part, db) => {
         namespace: "custom",
         key: "year",
         type: "single_line_text_field",
-        value: `${carResponse.year_start}-${carResponse.year_end}`,
+        value: carResponse.year_end
+          ? `${carResponse.year_start}-${carResponse.year_end}`
+          : `${carResponse.year_start}`,
       },
       {
         namespace: "custom",
@@ -290,12 +292,18 @@ async function updatePartInShopify(part, existingEntry, db) {
       value: carResponse.name,
     });
 
-    metafields.push({
-      namespace: "custom",
-      key: "year",
-      type: "single_line_text_field",
-      value: `${carResponse.year_start}-${carResponse.year_end}`,
-    });
+    if (carResponse.year_start) {
+      const yearValue = carResponse.year_end
+        ? `${carResponse.year_start}-${carResponse.year_end}`
+        : `${carResponse.year_start}`;
+
+      metafields.push({
+        namespace: "custom",
+        key: "year",
+        type: "single_line_text_field",
+        value: yearValue,
+      });
+    }
 
     if (
       part.name !== existingEntry.title ||
@@ -313,13 +321,13 @@ async function updatePartInShopify(part, existingEntry, db) {
             id: existingEntry.id,
             metafields,
             title: part.name || "No Title",
-            descriptionHtml: part.notes || "No description",
+            descriptionHtml: part.notes || "",
             status: "ACTIVE",
             variants: [
               {
                 id: existingEntry.variants.edges[0].node.id,
                 price: part.original_price || part.price || "0.00",
-                barcode: "xyz" || "",
+                barcode: part.manufacturer_code || "",
               },
             ],
           },
