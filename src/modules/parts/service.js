@@ -169,7 +169,7 @@ export async function insertDataIntoShopify() {
           const productInput = {
             input: {
               title: part.name || "No Title",
-              descriptionHtml: part.notes || "No description",
+              descriptionHtml: part.notes || "",
               tags: ["parts"],
               metafields,
               publications: [

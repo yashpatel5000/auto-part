@@ -170,7 +170,7 @@ const insertSinglePartToShopify = async (part, db) => {
     const productInput = {
       input: {
         title: part.name || "No Title",
-        descriptionHtml: part.notes || "No description",
+        descriptionHtml: part.notes || "",
         tags: ["parts"],
         metafields,
         publications: [
@@ -354,7 +354,7 @@ async function updatePartInShopify(part, existingEntry, db) {
             description: part.description,
             price: part.original_price || part.price || "0.00",
             barcode: part.manufacturer_code || "",
-            description: part.notes || "No Description",
+            description: part.notes || "",
           },
         }
       );
