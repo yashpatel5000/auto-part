@@ -5,6 +5,7 @@ import logger from "./utils/logger.js";
 import cron from "node-cron";
 import { scheduleDailyJob } from "./utils/cron-job.js";
 import { config } from "./config.js";
+import { deleteAllImages } from "./utils/aws.js";
 
 const app = express();
 
@@ -20,6 +21,12 @@ app.listen(3000, async () => {
         logger.info(`Cron job started at : ${new Date().toUTCString()}`);
         await scheduleDailyJob();
         logger.info(`Cron job ended at : ${new Date().toUTCString()}`);
+      });
+
+      cron.schedule(config.CRON_EXPRESSION_FOR_MEDIA_DELETION, async () => {
+        logger.info(`Cron Job for media deletion tarted at : ${new Date().toUTCString()}`);
+        await deleteAllImages();
+        logger.info(`Cron Job for media deletion ended at : ${new Date().toUTCString()}`);
       });
     }
     await insertDataIntoShopify();

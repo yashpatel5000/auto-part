@@ -25,5 +25,6 @@ export const config = {
   AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
   CRON_JOB_ENABLED: process.env.CRON_JOB_ENABLED.toString() === "false" ? false : true ,
   CRON_EXPRESSION: process.env.CRON_EXPRESSION,
-  STORE: process.env.STORE
+  STORE: process.env.STORE,
+  CRON_EXPRESSION_FOR_MEDIA_DELETION: process.env.CRON_EXPRESSION_FOR_MEDIA_DELETION
 };
