@@ -62,7 +62,7 @@ export async function deleteAllImages() {
       }
 
       const deleteParams = {
-        Bucket: BUCKET_NAME,
+        Bucket: config.AWS_S3_BUCKET_NAME,
         Delete: {
           Objects: imageObjects.map(({ Key }) => ({ Key })),
         },
