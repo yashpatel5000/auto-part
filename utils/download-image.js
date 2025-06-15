@@ -4,10 +4,12 @@ import { SIGNED_URL_CONTENT_TYPE } from "./constant.js";
 import logger from "./logger.js";
 
 const downloadImage = async (url) => {
+  let browser;
+
   try {
     const fileName = `${Date.now()}.jpeg`;
 
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
@@ -39,8 +41,6 @@ const downloadImage = async (url) => {
       SIGNED_URL_CONTENT_TYPE[url.split(".").pop()]
     );
 
-    await browser.close();
-
     return {
       filePath: `https://auto-part.s3.eu-north-1.amazonaws.com/${fileName}`,
       fileName,
@@ -48,6 +48,10 @@ const downloadImage = async (url) => {
   } catch (error) {
     logger.error("Failed to load image : 403");
     throw error;
+  } finally {
+    if(browser){
+      await browser.close()
+    }
   }
 };
 
