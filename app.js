@@ -29,7 +29,7 @@ app.listen(3000, async () => {
         logger.info(`Cron Job for media deletion ended at : ${new Date().toUTCString()}`);
       });
     }
-    await insertDataIntoShopify();
+   // await insertDataIntoShopify();
   } catch (error) {
     logger.error("App Crashed.");
   }

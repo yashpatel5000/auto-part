@@ -237,6 +237,8 @@ const insertSinglePartToShopify = async (part, db) => {
 async function updatePartInShopify(part, existingEntry, db) {
   try {
     let imageProcessing = null;
+
+    // Step 1: Process images
     if (part?.part_photo_gallery?.length || part?.photo) {
       imageProcessing = await processImage(part);
       part = imageProcessing.part;
@@ -250,11 +252,11 @@ async function updatePartInShopify(part, existingEntry, db) {
           productId: existingEntry.id,
         },
       });
-      logger.info(`Old images deleted for part : ${part.id}.`);
+      logger.info(`Old images deleted for part: ${part.id}`);
     }
 
+    // Step 2: Fetch car, brand, category data
     const { carResponse, brandNames, categories } = await fetchCarData(part);
-
     if (!carResponse || !brandNames || !categories) {
       logger.warn(
         `Missing car/brand/category data for Part ID ${part.id}, skipping update.`
@@ -262,41 +264,38 @@ async function updatePartInShopify(part, existingEntry, db) {
       return;
     }
 
-    const metafields = [];
-
-    metafields.push({
-      namespace: "custom",
-      key: "car",
-      type: "single_line_text_field",
-      value: brandNames.name,
-    });
-
-    metafields.push({
-      namespace: "custom",
-      key: "part_number",
-      type: "single_line_text_field",
-      value: part.id,
-    });
-
-    metafields.push({
-      namespace: "custom",
-      key: "product_type",
-      type: "single_line_text_field",
-      value: categories.lv,
-    });
-
-    metafields.push({
-      namespace: "custom",
-      key: "model",
-      type: "single_line_text_field",
-      value: carResponse.name,
-    });
+    // Step 3: Prepare metafields
+    const metafields = [
+      {
+        namespace: "custom",
+        key: "car",
+        type: "single_line_text_field",
+        value: brandNames.name,
+      },
+      {
+        namespace: "custom",
+        key: "part_number",
+        type: "single_line_text_field",
+        value: part.id,
+      },
+      {
+        namespace: "custom",
+        key: "product_type",
+        type: "single_line_text_field",
+        value: categories.lv,
+      },
+      {
+        namespace: "custom",
+        key: "model",
+        type: "single_line_text_field",
+        value: carResponse.name,
+      },
+    ];
 
     if (carResponse.year_start) {
       const yearValue = carResponse.year_end
         ? `${carResponse.year_start}-${carResponse.year_end}`
         : `${carResponse.year_start}`;
-
       metafields.push({
         namespace: "custom",
         key: "year",
@@ -305,60 +304,89 @@ async function updatePartInShopify(part, existingEntry, db) {
       });
     }
 
+    // Step 4: Update product
     if (
       part.name !== existingEntry.title ||
-      part.price !== existingEntry.price ||
-      part.manufacturer_code !== existingEntry.barcode ||
       part.notes !== existingEntry.description ||
-      part.original_price !== existingEntry.price ||
       part?.part_photo_gallery?.length ||
       part?.photo
     ) {
-      const response = await shopifyGraphQLRequest({
+      const productUpdateVariables = {
+        input: {
+          id: existingEntry.id,
+          metafields,
+          title: part.name || "No Title",
+          descriptionHtml: part.notes || "",
+          status: "ACTIVE",
+        },
+        media: part.part_photo_gallery,
+      };
+
+      console.log("🧾 Shopify Product Update Payload (for Postman):");
+      console.log(
+        JSON.stringify(
+          {
+            query: productUpdate,
+            variables: productUpdateVariables,
+          },
+          null,
+          2
+        )
+      );
+
+      const productResponse = await shopifyGraphQLRequest({
         query: productUpdate,
+        variables: productUpdateVariables,
+      });
+
+      // Update variant separately
+      await shopifyGraphQLRequest({
+        query: `
+          mutation productVariantUpdate($input: ProductVariantInput!) {
+            productVariantUpdate(input: $input) {
+              productVariant {
+                id
+                price
+                barcode
+              }
+              userErrors {
+                field
+                message
+              }
+            }
+          }
+        `,
         variables: {
           input: {
-            id: existingEntry.id,
-            metafields,
-            title: part.name || "No Title",
-            descriptionHtml: part.notes || "",
-            status: "ACTIVE",
-            variants: [
-              {
-                id: existingEntry.variants.edges[0].node.id,
-                price: part.original_price || part.price || "0.00",
-                barcode: part.manufacturer_code || "",
-              },
-            ],
+            id: existingEntry.variants.edges[0].node.id,
+            price: part.original_price || part.price || "0.00",
+            barcode: part.manufacturer_code || "",
           },
-          media: part.part_photo_gallery,
         },
       });
 
+      // Step 5: Update DB
       let metafieldForDB = { ...existingEntry.metafields };
-
-      if (metafields.length) {
-        metafields.forEach((field) => {
-          metafieldForDB[field.key] = field.value; // override or insert
-        });
-      }
+      metafields.forEach((field) => {
+        metafieldForDB[field.key] = field.value;
+      });
 
       await db.collection("shopify-parts").updateOne(
         { rrr_partId: part.id },
         {
           $set: {
             ...existingEntry,
-            ...response.data.data.productUpdate.product,
+            ...productResponse.data.data.productUpdate.product,
             metafields: metafieldForDB,
             title: part.name,
-            description: part.description,
+            description: part.notes || "",
             price: part.original_price || part.price || "0.00",
             barcode: part.manufacturer_code || "",
-            description: part.notes || "",
           },
         }
       );
 
+      // Optionally delete local image files after S3 upload
       // if (imageProcessing?.filePaths) {
       //   await deleteMedias(imageProcessing.filePaths);
       //   logger.info(`🗑️ Media deleted from S3 for Part ID ${part.id}`);
@@ -367,9 +395,11 @@ async function updatePartInShopify(part, existingEntry, db) {
       logger.info(`✅ Part ID ${part.id} successfully updated in Shopify.`);
     }
   } catch (error) {
+    logger.error("❌ Shopify update failed", error);
     throw error;
   }
 }
+
 
 export const scheduleDailyJob = async () => {
   try {
