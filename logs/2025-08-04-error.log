@@ -1,0 +1,101 @@
+2025-08-04 00:11:13 [error]: ❌ Failed to load image: 
+2025-08-04 00:11:14 [error]: Failed to load image : 403 
+2025-08-04 00:11:14 [error]: Error processing images for Part ID 5298: Failed to load image : 403 
+2025-08-04 00:11:14 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 12)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 00:11:14 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 12)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 01:09:20 [error]: ❌ Failed to load image: 
+2025-08-04 01:09:20 [error]: Failed to load image : 403 
+2025-08-04 01:09:20 [error]: Error processing images for Part ID 7585: Failed to load image : 403 
+2025-08-04 01:09:20 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 5)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 01:09:20 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 5)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 04:58:38 [error]: Shopify GraphQL Error: 
+2025-08-04 04:58:38 [error]: TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle
+    at JSON.stringify (<anonymous>)
+    at Printf.template (file:///home/ec2-user/auto-part/utils/logger.js:7:51)
+    at Printf.transform (/home/ec2-user/auto-part/node_modules/logform/printf.js:11:26)
+    at Format.transform (/home/ec2-user/auto-part/node_modules/logform/combine.js:20:24)
+    at DerivedLogger._transform (/home/ec2-user/auto-part/node_modules/winston/lib/winston/logger.js:314:29)
+    at Transform._read (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_transform.js:166:10)
+    at Transform._write (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_transform.js:155:83)
+    at doWrite (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Writable.write (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:302:11) 
+2025-08-04 08:41:58 [error]: ❌ Failed to load image: 
+2025-08-04 08:41:58 [error]: Failed to load image : 403 
+2025-08-04 08:41:58 [error]: Error processing images for Part ID 23651: Failed to load image : 403 
+2025-08-04 08:41:58 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 6)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 08:41:58 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 6)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 08:42:18 [error]: ❌ Failed to load image: 
+2025-08-04 08:42:18 [error]: Failed to load image : 403 
+2025-08-04 08:42:18 [error]: Error processing images for Part ID 23652: Failed to load image : 403 
+2025-08-04 08:42:18 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 8)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 08:42:18 [error]: Error: Failed to load image : 403
+    at downloadImage (file:///home/ec2-user/auto-part/utils/download-image.js:33:13)
+    at async file:///home/ec2-user/auto-part/utils/cron-job.js:40:44
+    at async Promise.all (index 8)
+    at async processImage (file:///home/ec2-user/auto-part/utils/cron-job.js:35:33)
+    at async updatePartInShopify (file:///home/ec2-user/auto-part/utils/cron-job.js:243:25)
+    at async scheduleDailyJob (file:///home/ec2-user/auto-part/utils/cron-job.js:432:15)
+    at async file:///home/ec2-user/auto-part/app.js:22:9
+    at async /home/ec2-user/auto-part/node_modules/node-cron/dist/esm/scheduler/runner.js:67:44 
+2025-08-04 09:43:49 [error]: Error fetching car data for Part ID 25511: Cannot read properties of undefined (reading '0') 
+2025-08-04 09:52:57 [error]: Error fetching car data for Part ID 25782: Cannot read properties of undefined (reading '0') 
