@@ -179,8 +179,10 @@ const insertSinglePartToShopify = async (part, db) => {
               publicationIdResponse.data.data.publications.edges[0].node.id,
           },
         ],
+	status: part.status === "0" ? "ACTIVE" : "DRAFT",
         variants: [
           {
+             sku: part.id || "0",
             price: part.original_price || part.price || "0.00",
             barcode: part.manufacturer_code || "",
             inventoryManagement: "SHOPIFY",
@@ -191,16 +193,23 @@ const insertSinglePartToShopify = async (part, db) => {
                 availableQuantity: 1,
               },
             }),
+	    ...(part.status !== "0" && {
+	       inventoryQuantities: {
+		  locationId,
+		  availableQuantity: 0,
+		}
+             })
           },
         ],
       },
       media: part.part_photo_gallery,
     };
-
+    console.log(productInput);
     const productResponse = await shopifyGraphQLRequest({
       query: productCreate,
       variables: productInput,
-    });
+    }); 
+	  console.log(productResponse.data.errors);
 
     if (productResponse.data.data.productCreate.userErrors.length) {
       logger.error(`Unable to store part Id : ${part.id} into shopify.`);
@@ -289,7 +298,7 @@ async function updatePartInShopify(part, existingEntry, db) {
         key: "model",
         type: "single_line_text_field",
         value: carResponse.name,
-      },
+      }, 
     ];
 
     if (carResponse.year_start) {
@@ -317,27 +326,35 @@ async function updatePartInShopify(part, existingEntry, db) {
           metafields,
           title: part.name || "No Title",
           descriptionHtml: part.notes || "",
-          status: "ACTIVE",
+          status: part.status === "0" ? "ACTIVE" : "DRAFT",
         },
         media: part.part_photo_gallery,
       };
 
-      console.log("🧾 Shopify Product Update Payload (for Postman):");
-      console.log(
-        JSON.stringify(
-          {
-            query: productUpdate,
-            variables: productUpdateVariables,
-          },
-          null,
-          2
-        )
-      );
+ //     console.log("🧾 Shopify Product Update Payload (for Postman):");
+   //   console.log(
+     //   JSON.stringify(
+       //   {
+         //   query: productUpdate,
+           // variables: productUpdateVariables,
+         // },
+         // null,
+         // 2
+     //   )
+     // );
 
       const productResponse = await shopifyGraphQLRequest({
         query: productUpdate,
         variables: productUpdateVariables,
       });
+
+      const locationResponse = await shopifyGraphQLRequest({
+        query: getLocation(),
+        variables: {},
+      });
+
+      const locationId = locationResponse.data.data.locations.edges[0].node.id;
+
 
       // Update variant separately
       await shopifyGraphQLRequest({
@@ -361,6 +378,19 @@ async function updatePartInShopify(part, existingEntry, db) {
             id: existingEntry.variants.edges[0].node.id,
             price: part.original_price || part.price || "0.00",
             barcode: part.manufacturer_code || "",
+	    sku: part.id,
+            ...(part.status === "0" && {
+              inventoryQuantities: {
+                locationId,
+                availableQuantity: 1,
+              },
+            }),
+	    ...(part.status !== "0" && {
+	        inventoryQuantities: {
+		  locationId,
+	           availableQuantity: 0,
+		},
+	     }),
           },
         },
       });
@@ -408,9 +438,9 @@ export const scheduleDailyJob = async () => {
 
     const allAPIIds = new Set();
     const limit = 100;
-    let totalPages = 1; // Default to 1, will update after first API call
+    let totalPages = 311; // Default to 1, will update after first API call
 
-    for (let page = 1; page <= totalPages; page++) {
+    for (let page = 311; page <= totalPages; page++) {
       try {
         const response = await axios.post(partsEndpoint, formData, {
           params: { page, limit },

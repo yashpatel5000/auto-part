@@ -56,7 +56,7 @@ export async function insertDataIntoShopify() {
     const db = await connectDB();
     const limit = 100;
     const totalPages = Math.ceil(CURRENT_PARTS / limit);
-
+    let counter = 0 ;
     for (let page = 1; page <= totalPages; page++) {
       logger.info(`📥 Fetching products for page ${page}`);
 
@@ -70,6 +70,7 @@ export async function insertDataIntoShopify() {
       });
 
       const allParts = response.data.data;
+      counter = counter + allParts.length ; 
 
       for await (let part of allParts) {
         try {
@@ -237,6 +238,7 @@ export async function insertDataIntoShopify() {
           continue;
         }
       }
+	    console.log("Counter:",counter);
     }
   } catch (err) {
     logger.error(`❌ API Error: ${err.message}`, err);
