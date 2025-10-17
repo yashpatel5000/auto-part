@@ -1,0 +1,956 @@
+2025-10-16 01:58:00 [error]: Shopify GraphQL Error: 
+2025-10-16 01:58:00 [error]: TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Agent'
+    |     property 'sockets' -> object with constructor 'Object'
+    |     property 'ehqm6u-4t.myshopify.com:443:::::::::::::::::::::' -> object with constructor 'Array'
+    |     ...
+    |     property '_httpMessage' -> object with constructor 'ClientRequest'
+    --- property 'agent' closes the circle
+    at JSON.stringify (<anonymous>)
+    at Printf.template (file:///home/ec2-user/auto-part/utils/logger.js:7:51)
+    at Printf.transform (/home/ec2-user/auto-part/node_modules/logform/printf.js:11:26)
+    at Format.transform (/home/ec2-user/auto-part/node_modules/logform/combine.js:20:24)
+    at DerivedLogger._transform (/home/ec2-user/auto-part/node_modules/winston/lib/winston/logger.js:314:29)
+    at Transform._read (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_transform.js:166:10)
+    at Transform._write (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_transform.js:155:83)
+    at doWrite (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Writable.write (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:302:11) 
+2025-10-16 02:03:05 [error]: Shopify GraphQL Error: 
+2025-10-16 02:03:05 [error]: TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle
+    at JSON.stringify (<anonymous>)
+    at Printf.template (file:///home/ec2-user/auto-part/utils/logger.js:7:51)
+    at Printf.transform (/home/ec2-user/auto-part/node_modules/logform/printf.js:11:26)
+    at Format.transform (/home/ec2-user/auto-part/node_modules/logform/combine.js:20:24)
+    at DerivedLogger._transform (/home/ec2-user/auto-part/node_modules/winston/lib/winston/logger.js:314:29)
+    at Transform._read (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_transform.js:166:10)
+    at Transform._write (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_transform.js:155:83)
+    at doWrite (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:390:139)
+    at writeOrBuffer (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:381:5)
+    at Writable.write (/home/ec2-user/auto-part/node_modules/readable-stream/lib/_stream_writable.js:302:11) 
+2025-10-16 07:42:38 [error]: Error processing page 248 of parts API: Cannot read properties of undefined (reading 'total_count') 
+2025-10-16 07:43:38 [error]: Error processing page 249 of parts API: Cannot read properties of undefined (reading 'total_count') 
+2025-10-16 07:46:54 [error]: Error fetching car data for Part ID 25511: Cannot read properties of undefined (reading '0') 
+2025-10-16 07:55:43 [error]: Error fetching car data for Part ID 25782: Cannot read properties of undefined (reading '0') 
+2025-10-16 09:29:05 [error]: Error processing page 283 of parts API: read ECONNRESET 
+2025-10-16 10:32:13 [error]: Error inserting part ID 31018: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:14 [error]: Error inserting part ID 31019: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:15 [error]: Error inserting part ID 31020: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:16 [error]: Error inserting part ID 31021: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:16 [error]: Error inserting part ID 31022: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:17 [error]: Error inserting part ID 31023: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:18 [error]: Error inserting part ID 31024: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:18 [error]: Error inserting part ID 31025: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:19 [error]: Error inserting part ID 31026: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:20 [error]: Error inserting part ID 31027: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:21 [error]: Error inserting part ID 31028: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:21 [error]: Error inserting part ID 31029: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:22 [error]: Error inserting part ID 31030: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:23 [error]: Error inserting part ID 31031: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:24 [error]: Error inserting part ID 31032: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:24 [error]: Error inserting part ID 31033: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:25 [error]: Error inserting part ID 31034: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:26 [error]: Error inserting part ID 31035: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:27 [error]: Error inserting part ID 31036: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:27 [error]: Error inserting part ID 31037: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:28 [error]: Error inserting part ID 31038: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:29 [error]: Error inserting part ID 31039: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:30 [error]: Error inserting part ID 31040: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:30 [error]: Error inserting part ID 31041: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:31 [error]: Error inserting part ID 31042: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:32 [error]: Error inserting part ID 31043: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:35 [error]: Error inserting part ID 31044: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:36 [error]: Error inserting part ID 31045: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:37 [error]: Error inserting part ID 31046: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:38 [error]: Error inserting part ID 31047: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:38 [error]: Error inserting part ID 31048: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:39 [error]: Error inserting part ID 31049: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:40 [error]: Error inserting part ID 31050: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:41 [error]: Error inserting part ID 31051: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:41 [error]: Error inserting part ID 31052: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:42 [error]: Error inserting part ID 31053: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:43 [error]: Error inserting part ID 31054: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:44 [error]: Error inserting part ID 31055: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:44 [error]: Error inserting part ID 31056: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:45 [error]: Error inserting part ID 31057: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:46 [error]: Error inserting part ID 31058: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:46 [error]: Error inserting part ID 31059: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:47 [error]: Error inserting part ID 31060: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:48 [error]: Error inserting part ID 31061: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:49 [error]: Error inserting part ID 31062: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:50 [error]: Error inserting part ID 31063: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:50 [error]: Error inserting part ID 31064: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:51 [error]: Error inserting part ID 31065: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:52 [error]: Error inserting part ID 31066: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:53 [error]: Error inserting part ID 31067: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:53 [error]: Error inserting part ID 31068: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:54 [error]: Error inserting part ID 31069: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:55 [error]: Error inserting part ID 31070: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:56 [error]: Error inserting part ID 31071: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:56 [error]: Error inserting part ID 31072: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:57 [error]: Error inserting part ID 31073: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:58 [error]: Error inserting part ID 31074: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:59 [error]: Error inserting part ID 31075: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:32:59 [error]: Error inserting part ID 31076: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:00 [error]: Error inserting part ID 31077: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:01 [error]: Error inserting part ID 31078: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:02 [error]: Error inserting part ID 31079: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:02 [error]: Error inserting part ID 31080: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:03 [error]: Error inserting part ID 31081: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:04 [error]: Error inserting part ID 31082: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:04 [error]: Error inserting part ID 31083: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:05 [error]: Error inserting part ID 31084: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:06 [error]: Error inserting part ID 31085: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:07 [error]: Error inserting part ID 31086: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:08 [error]: Error inserting part ID 31087: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:08 [error]: Error inserting part ID 31088: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:09 [error]: Error inserting part ID 31089: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:10 [error]: Error inserting part ID 31090: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:11 [error]: Error inserting part ID 31091: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:12 [error]: Error inserting part ID 31092: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:13 [error]: Error inserting part ID 31093: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:13 [error]: Error inserting part ID 31094: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:14 [error]: Error inserting part ID 31095: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:15 [error]: Error inserting part ID 31096: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:16 [error]: Error inserting part ID 31097: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:16 [error]: Error inserting part ID 31098: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:17 [error]: Error inserting part ID 31099: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:18 [error]: Error inserting part ID 31100: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:18 [error]: Error inserting part ID 31101: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:19 [error]: Error inserting part ID 31102: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:20 [error]: Error inserting part ID 31103: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:21 [error]: Error inserting part ID 31104: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:22 [error]: Error inserting part ID 31105: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:23 [error]: Error inserting part ID 31106: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:23 [error]: Error inserting part ID 31107: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:24 [error]: Error inserting part ID 31108: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:25 [error]: Error inserting part ID 31109: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:26 [error]: Error inserting part ID 31110: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:26 [error]: Error inserting part ID 31111: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:27 [error]: Error inserting part ID 31112: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:28 [error]: Error inserting part ID 31113: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:29 [error]: Error inserting part ID 31114: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:30 [error]: Error inserting part ID 31115: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:31 [error]: Error inserting part ID 31116: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:32 [error]: Error inserting part ID 31117: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:32 [error]: Error inserting part ID 31118: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:33 [error]: Error inserting part ID 31119: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:34 [error]: Error inserting part ID 31120: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:35 [error]: Error inserting part ID 31121: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:35 [error]: Error inserting part ID 31122: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:36 [error]: Error inserting part ID 31123: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:37 [error]: Error inserting part ID 31124: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:38 [error]: Error inserting part ID 31125: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:39 [error]: Error inserting part ID 31126: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:39 [error]: Error inserting part ID 31127: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:40 [error]: Error inserting part ID 31128: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:41 [error]: Error inserting part ID 31129: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:42 [error]: Error inserting part ID 31130: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:42 [error]: Error inserting part ID 31131: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:43 [error]: Error inserting part ID 31132: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:44 [error]: Error inserting part ID 31133: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:45 [error]: Error inserting part ID 31134: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:45 [error]: Error inserting part ID 31135: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:46 [error]: Error inserting part ID 31136: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:47 [error]: Error inserting part ID 31137: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:48 [error]: Error inserting part ID 31138: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:49 [error]: Error inserting part ID 31139: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:49 [error]: Error inserting part ID 31140: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:50 [error]: Error inserting part ID 31141: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:51 [error]: Error inserting part ID 31142: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:52 [error]: Error inserting part ID 31143: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:55 [error]: Error inserting part ID 31144: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:56 [error]: Error inserting part ID 31145: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:56 [error]: Error inserting part ID 31146: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:57 [error]: Error inserting part ID 31147: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:58 [error]: Error inserting part ID 31148: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:59 [error]: Error inserting part ID 31149: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:33:59 [error]: Error inserting part ID 31150: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:00 [error]: Error inserting part ID 31151: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:01 [error]: Error inserting part ID 31152: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:02 [error]: Error inserting part ID 31153: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:02 [error]: Error inserting part ID 31154: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:03 [error]: Error inserting part ID 31155: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:04 [error]: Error inserting part ID 31156: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:05 [error]: Error inserting part ID 31157: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:06 [error]: Error inserting part ID 31158: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:06 [error]: Error inserting part ID 31159: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:07 [error]: Error inserting part ID 31160: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:08 [error]: Error inserting part ID 31161: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:09 [error]: Error inserting part ID 31162: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:09 [error]: Error inserting part ID 31163: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:10 [error]: Error inserting part ID 31164: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:11 [error]: Error inserting part ID 31165: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:12 [error]: Error inserting part ID 31166: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:12 [error]: Error inserting part ID 31167: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:13 [error]: Error inserting part ID 31168: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:14 [error]: Error inserting part ID 31169: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:15 [error]: Error inserting part ID 31170: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:15 [error]: Error inserting part ID 31171: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:16 [error]: Error inserting part ID 31172: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:17 [error]: Error inserting part ID 31173: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:17 [error]: Error inserting part ID 31174: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:18 [error]: Error inserting part ID 31175: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:19 [error]: Error inserting part ID 31176: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:20 [error]: Error inserting part ID 31177: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:20 [error]: Error inserting part ID 31178: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:21 [error]: Error inserting part ID 31179: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:22 [error]: Error inserting part ID 31180: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:23 [error]: Error inserting part ID 31181: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:23 [error]: Error inserting part ID 31182: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:24 [error]: Error inserting part ID 31183: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:25 [error]: Error inserting part ID 31184: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:26 [error]: Error inserting part ID 31185: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:26 [error]: Error inserting part ID 31186: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:27 [error]: Error inserting part ID 31187: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:28 [error]: Error inserting part ID 31188: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:29 [error]: Error inserting part ID 31189: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:30 [error]: Error inserting part ID 31190: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:30 [error]: Error inserting part ID 31191: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:31 [error]: Error inserting part ID 31192: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:32 [error]: Error inserting part ID 31193: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:32 [error]: Error inserting part ID 31194: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:33 [error]: Error inserting part ID 31195: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:34 [error]: Error inserting part ID 31196: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:35 [error]: Error inserting part ID 31197: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:36 [error]: Error inserting part ID 31198: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:37 [error]: Error inserting part ID 31199: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:37 [error]: Error inserting part ID 31200: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:38 [error]: Error inserting part ID 31201: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:39 [error]: Error inserting part ID 31202: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:40 [error]: Error inserting part ID 31203: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:40 [error]: Error inserting part ID 31204: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:41 [error]: Error inserting part ID 31205: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:42 [error]: Error inserting part ID 31206: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:43 [error]: Error inserting part ID 31207: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:43 [error]: Error inserting part ID 31208: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:44 [error]: Error inserting part ID 31209: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:45 [error]: Error inserting part ID 31210: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:46 [error]: Error inserting part ID 31211: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:47 [error]: Error inserting part ID 31212: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:47 [error]: Error inserting part ID 31213: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:48 [error]: Error inserting part ID 31214: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:49 [error]: Error inserting part ID 31215: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:50 [error]: Error inserting part ID 31216: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:50 [error]: Error inserting part ID 31217: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:51 [error]: Error inserting part ID 31218: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:52 [error]: Error inserting part ID 31219: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:52 [error]: Error inserting part ID 31220: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:53 [error]: Error inserting part ID 31221: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:54 [error]: Error inserting part ID 31222: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:55 [error]: Error inserting part ID 31223: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:55 [error]: Error inserting part ID 31224: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:56 [error]: Error inserting part ID 31225: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:57 [error]: Error inserting part ID 31226: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:58 [error]: Error inserting part ID 31227: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:59 [error]: Error inserting part ID 31228: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:34:59 [error]: Error inserting part ID 31229: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:00 [error]: Error inserting part ID 31230: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:01 [error]: Error inserting part ID 31231: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:02 [error]: Error inserting part ID 31232: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:03 [error]: Error inserting part ID 31233: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:03 [error]: Error inserting part ID 31234: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:04 [error]: Error inserting part ID 31235: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:05 [error]: Error inserting part ID 31236: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:06 [error]: Error inserting part ID 31237: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:07 [error]: Error inserting part ID 31238: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:08 [error]: Error inserting part ID 31239: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:09 [error]: Error inserting part ID 31240: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:10 [error]: Error inserting part ID 31241: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:10 [error]: Error inserting part ID 31242: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:11 [error]: Error inserting part ID 31243: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:15 [error]: Error inserting part ID 31244: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:16 [error]: Error inserting part ID 31245: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:17 [error]: Error inserting part ID 31246: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:18 [error]: Error inserting part ID 31247: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:19 [error]: Error inserting part ID 31248: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:19 [error]: Error inserting part ID 31249: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:20 [error]: Error inserting part ID 31250: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:21 [error]: Error inserting part ID 31251: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:22 [error]: Error inserting part ID 31252: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:23 [error]: Error inserting part ID 31253: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:24 [error]: Error inserting part ID 31254: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:25 [error]: Error inserting part ID 31255: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:25 [error]: Error inserting part ID 31256: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:26 [error]: Error inserting part ID 31257: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:27 [error]: Error inserting part ID 31258: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:28 [error]: Error inserting part ID 31259: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:28 [error]: Error inserting part ID 31260: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:29 [error]: Error inserting part ID 31261: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:30 [error]: Error inserting part ID 31262: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:32 [error]: Error inserting part ID 31263: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:33 [error]: Error inserting part ID 31264: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:34 [error]: Error inserting part ID 31265: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:35 [error]: Error inserting part ID 31266: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:35 [error]: Error inserting part ID 31267: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:36 [error]: Error inserting part ID 31268: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:37 [error]: Error inserting part ID 31269: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:38 [error]: Error inserting part ID 31270: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:38 [error]: Error inserting part ID 31271: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:39 [error]: Error inserting part ID 31272: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:40 [error]: Error inserting part ID 31273: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:41 [error]: Error inserting part ID 31274: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:41 [error]: Error inserting part ID 31275: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:42 [error]: Error inserting part ID 31276: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:43 [error]: Error inserting part ID 31277: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:44 [error]: Error inserting part ID 31278: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:45 [error]: Error inserting part ID 31279: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:45 [error]: Error inserting part ID 31280: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:46 [error]: Error inserting part ID 31281: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:47 [error]: Error inserting part ID 31282: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:48 [error]: Error inserting part ID 31283: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:49 [error]: Error inserting part ID 31284: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:49 [error]: Error inserting part ID 31285: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:50 [error]: Error inserting part ID 31286: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:51 [error]: Error inserting part ID 31287: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:52 [error]: Error inserting part ID 31288: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:53 [error]: Error inserting part ID 31289: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:54 [error]: Error inserting part ID 31290: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:54 [error]: Error inserting part ID 31291: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:55 [error]: Error inserting part ID 31292: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:56 [error]: Error inserting part ID 31293: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:57 [error]: Error inserting part ID 31294: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:57 [error]: Error inserting part ID 31295: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:58 [error]: Error inserting part ID 31296: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:35:59 [error]: Error inserting part ID 31297: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:00 [error]: Error inserting part ID 31298: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:00 [error]: Error inserting part ID 31299: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:01 [error]: Error inserting part ID 31300: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:02 [error]: Error inserting part ID 31301: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:02 [error]: Error inserting part ID 31302: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:03 [error]: Error inserting part ID 31303: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:04 [error]: Error inserting part ID 31304: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:05 [error]: Error inserting part ID 31305: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:05 [error]: Error inserting part ID 31306: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:06 [error]: Error inserting part ID 31307: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:07 [error]: Error inserting part ID 31308: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:08 [error]: Error inserting part ID 31309: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:09 [error]: Error inserting part ID 31310: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:09 [error]: Error inserting part ID 31311: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:10 [error]: Error inserting part ID 31312: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:11 [error]: Error inserting part ID 31313: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:12 [error]: Error inserting part ID 31314: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:12 [error]: Error inserting part ID 31315: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:13 [error]: Error inserting part ID 31316: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:14 [error]: Error inserting part ID 31317: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:15 [error]: Error inserting part ID 31318: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:15 [error]: Error inserting part ID 31319: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:16 [error]: Error inserting part ID 31320: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:17 [error]: Error inserting part ID 31321: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:18 [error]: Error inserting part ID 31322: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:19 [error]: Error inserting part ID 31323: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:19 [error]: Error inserting part ID 31324: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:20 [error]: Error inserting part ID 31325: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:21 [error]: Error inserting part ID 31326: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:22 [error]: Error inserting part ID 31327: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:22 [error]: Error inserting part ID 31328: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:23 [error]: Error inserting part ID 31329: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:24 [error]: Error inserting part ID 31330: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:24 [error]: Error inserting part ID 31331: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:25 [error]: Error inserting part ID 31332: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:26 [error]: Error inserting part ID 31333: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:27 [error]: Error inserting part ID 31334: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:28 [error]: Error inserting part ID 31335: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:28 [error]: Error inserting part ID 31336: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:29 [error]: Error inserting part ID 31337: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:30 [error]: Error inserting part ID 31338: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:31 [error]: Error inserting part ID 31339: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:32 [error]: Error inserting part ID 31340: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:32 [error]: Error inserting part ID 31341: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:33 [error]: Error inserting part ID 31342: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:34 [error]: Error inserting part ID 31343: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:38 [error]: Error inserting part ID 31344: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:39 [error]: Error inserting part ID 31345: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:40 [error]: Error inserting part ID 31346: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:41 [error]: Error inserting part ID 31347: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:41 [error]: Error inserting part ID 31348: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:42 [error]: Error inserting part ID 31349: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:43 [error]: Error inserting part ID 31350: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:44 [error]: Error inserting part ID 31351: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:44 [error]: Error inserting part ID 31352: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:45 [error]: Error inserting part ID 31353: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:46 [error]: Error inserting part ID 31354: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:47 [error]: Error inserting part ID 31355: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:48 [error]: Error inserting part ID 31356: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:49 [error]: Error inserting part ID 31357: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:50 [error]: Error inserting part ID 31358: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:51 [error]: Error inserting part ID 31359: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:52 [error]: Error inserting part ID 31360: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:53 [error]: Error inserting part ID 31361: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:53 [error]: Error inserting part ID 31362: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:54 [error]: Error inserting part ID 31363: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:55 [error]: Error inserting part ID 31364: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:56 [error]: Error inserting part ID 31365: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:57 [error]: Error inserting part ID 31366: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:58 [error]: Error inserting part ID 31367: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:58 [error]: Error inserting part ID 31368: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:36:59 [error]: Error inserting part ID 31369: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:00 [error]: Error inserting part ID 31370: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:01 [error]: Error inserting part ID 31371: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:02 [error]: Error inserting part ID 31372: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:03 [error]: Error inserting part ID 31373: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:04 [error]: Error inserting part ID 31374: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:04 [error]: Error inserting part ID 31375: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:05 [error]: Error inserting part ID 31376: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:06 [error]: Error inserting part ID 31377: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:07 [error]: Error inserting part ID 31378: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:08 [error]: Error inserting part ID 31379: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:08 [error]: Error inserting part ID 31380: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:09 [error]: Error inserting part ID 31381: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:10 [error]: Error inserting part ID 31382: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:11 [error]: Error inserting part ID 31383: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:12 [error]: Error inserting part ID 31384: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:12 [error]: Error inserting part ID 31385: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:13 [error]: Error inserting part ID 31386: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:14 [error]: Error inserting part ID 31387: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:15 [error]: Error inserting part ID 31388: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:16 [error]: Error inserting part ID 31389: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:16 [error]: Error inserting part ID 31390: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:17 [error]: Error inserting part ID 31391: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:18 [error]: Error inserting part ID 31392: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:19 [error]: Error inserting part ID 31393: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:20 [error]: Error inserting part ID 31394: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:20 [error]: Error inserting part ID 31395: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:21 [error]: Error inserting part ID 31396: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:22 [error]: Error inserting part ID 31397: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:23 [error]: Error inserting part ID 31398: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:24 [error]: Error inserting part ID 31399: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:24 [error]: Error inserting part ID 31400: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:25 [error]: Error inserting part ID 31401: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:26 [error]: Error inserting part ID 31402: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:27 [error]: Error inserting part ID 31403: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:28 [error]: Error inserting part ID 31404: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:28 [error]: Error inserting part ID 31405: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:29 [error]: Error inserting part ID 31406: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:30 [error]: Error inserting part ID 31407: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:31 [error]: Error inserting part ID 31408: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:32 [error]: Error inserting part ID 31409: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:32 [error]: Error inserting part ID 31410: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:33 [error]: Error inserting part ID 31411: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:34 [error]: Error inserting part ID 31412: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:35 [error]: Error inserting part ID 31413: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:36 [error]: Error inserting part ID 31414: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:36 [error]: Error inserting part ID 31415: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:37 [error]: Error inserting part ID 31416: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:38 [error]: Error inserting part ID 31417: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:39 [error]: Error inserting part ID 31418: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:40 [error]: Error inserting part ID 31419: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:40 [error]: Error inserting part ID 31420: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:41 [error]: Error inserting part ID 31421: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:42 [error]: Error inserting part ID 31422: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:43 [error]: Error inserting part ID 31423: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:43 [error]: Error inserting part ID 31424: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:44 [error]: Error inserting part ID 31425: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:45 [error]: Error inserting part ID 31426: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:46 [error]: Error inserting part ID 31427: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:47 [error]: Error inserting part ID 31428: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:47 [error]: Error inserting part ID 31429: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:48 [error]: Error inserting part ID 31430: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:49 [error]: Error inserting part ID 31431: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:50 [error]: Error inserting part ID 31432: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:51 [error]: Error inserting part ID 31433: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:52 [error]: Error inserting part ID 31434: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:52 [error]: Error inserting part ID 31435: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:53 [error]: Error inserting part ID 31436: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:54 [error]: Error inserting part ID 31437: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:55 [error]: Error inserting part ID 31438: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:55 [error]: Error inserting part ID 31439: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:56 [error]: Error inserting part ID 31440: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:57 [error]: Error inserting part ID 31441: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:58 [error]: Error inserting part ID 31442: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:37:59 [error]: Error inserting part ID 31443: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:02 [error]: Error inserting part ID 31444: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:03 [error]: Error inserting part ID 31445: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:03 [error]: Error inserting part ID 31446: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:04 [error]: Error inserting part ID 31447: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:05 [error]: Error inserting part ID 31448: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:06 [error]: Error inserting part ID 31449: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:06 [error]: Error inserting part ID 31450: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:07 [error]: Error inserting part ID 31451: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:08 [error]: Error inserting part ID 31452: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:09 [error]: Error inserting part ID 31453: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:09 [error]: Error inserting part ID 31454: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:10 [error]: Error inserting part ID 31455: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:11 [error]: Error inserting part ID 31456: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:12 [error]: Error inserting part ID 31457: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:13 [error]: Error inserting part ID 31458: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:13 [error]: Error inserting part ID 31459: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:14 [error]: Error inserting part ID 31460: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:15 [error]: Error inserting part ID 31461: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:16 [error]: Error inserting part ID 31462: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:17 [error]: Error inserting part ID 31463: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:17 [error]: Error inserting part ID 31464: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:18 [error]: Error inserting part ID 31465: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:19 [error]: Error inserting part ID 31466: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:20 [error]: Error inserting part ID 31467: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:21 [error]: Error inserting part ID 31468: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:22 [error]: Error inserting part ID 31469: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:22 [error]: Error inserting part ID 31470: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:23 [error]: Error inserting part ID 31471: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:24 [error]: Error inserting part ID 31472: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:25 [error]: Error inserting part ID 31473: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:25 [error]: Error inserting part ID 31474: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:26 [error]: Error inserting part ID 31475: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:27 [error]: Error inserting part ID 31476: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:28 [error]: Error inserting part ID 31477: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:29 [error]: Error inserting part ID 31478: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:29 [error]: Error inserting part ID 31479: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:30 [error]: Error inserting part ID 31480: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:31 [error]: Error inserting part ID 31481: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:32 [error]: Error inserting part ID 31482: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:33 [error]: Error inserting part ID 31483: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:34 [error]: Error inserting part ID 31484: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:35 [error]: Error inserting part ID 31485: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:36 [error]: Error inserting part ID 31486: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:37 [error]: Error inserting part ID 31487: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:38 [error]: Error inserting part ID 31488: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:39 [error]: Error inserting part ID 31489: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:40 [error]: Error inserting part ID 31490: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:41 [error]: Error inserting part ID 31491: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:42 [error]: Error inserting part ID 31492: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:43 [error]: Error inserting part ID 31493: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:44 [error]: Error inserting part ID 31494: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:45 [error]: Error inserting part ID 31495: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:46 [error]: Error inserting part ID 31496: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:47 [error]: Error inserting part ID 31497: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:48 [error]: Error inserting part ID 31498: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:49 [error]: Error inserting part ID 31499: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:50 [error]: Error inserting part ID 31500: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:51 [error]: Error inserting part ID 31501: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:52 [error]: Error inserting part ID 31502: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:53 [error]: Error inserting part ID 31503: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:54 [error]: Error inserting part ID 31504: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:55 [error]: Error inserting part ID 31505: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:56 [error]: Error inserting part ID 31506: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:57 [error]: Error inserting part ID 31507: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:38:58 [error]: Error inserting part ID 31508: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:00 [error]: Error inserting part ID 31509: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:01 [error]: Error inserting part ID 31510: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:02 [error]: Error inserting part ID 31511: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:03 [error]: Error inserting part ID 31512: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:04 [error]: Error inserting part ID 31513: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:05 [error]: Error inserting part ID 31514: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:07 [error]: Error inserting part ID 31515: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:08 [error]: Error inserting part ID 31516: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:09 [error]: Error inserting part ID 31517: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:11 [error]: Error inserting part ID 31518: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:13 [error]: Error inserting part ID 31519: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:14 [error]: Error inserting part ID 31520: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:16 [error]: Error inserting part ID 31521: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:18 [error]: Error inserting part ID 31522: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:20 [error]: Error inserting part ID 31523: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:21 [error]: Error inserting part ID 31524: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:24 [error]: Error inserting part ID 31525: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:26 [error]: Error inserting part ID 31526: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:27 [error]: Error inserting part ID 31527: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:29 [error]: Error inserting part ID 31528: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:30 [error]: Error inserting part ID 31529: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:32 [error]: Error inserting part ID 31530: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:33 [error]: Error inserting part ID 31531: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:34 [error]: Error inserting part ID 31532: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:36 [error]: Error inserting part ID 31533: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:37 [error]: Error inserting part ID 31534: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:38 [error]: Error inserting part ID 31535: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:40 [error]: Error inserting part ID 31536: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:41 [error]: Error inserting part ID 31537: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:42 [error]: Error inserting part ID 31538: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:43 [error]: Error inserting part ID 31539: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:44 [error]: Error inserting part ID 31540: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:46 [error]: Error inserting part ID 31541: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:48 [error]: Error inserting part ID 31542: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:49 [error]: Error inserting part ID 31543: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:53 [error]: Error inserting part ID 31544: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:55 [error]: Error inserting part ID 31545: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:56 [error]: Error inserting part ID 31546: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:58 [error]: Error inserting part ID 31547: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:39:59 [error]: Error inserting part ID 31548: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:00 [error]: Error inserting part ID 31549: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:02 [error]: Error inserting part ID 31550: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:03 [error]: Error inserting part ID 31551: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:04 [error]: Error inserting part ID 31552: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:06 [error]: Error inserting part ID 31553: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:07 [error]: Error inserting part ID 31554: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:08 [error]: Error inserting part ID 31555: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:09 [error]: Error inserting part ID 31556: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:11 [error]: Error inserting part ID 31557: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:12 [error]: Error inserting part ID 31558: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:13 [error]: Error inserting part ID 31559: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:14 [error]: Error inserting part ID 31560: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:15 [error]: Error inserting part ID 31561: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:16 [error]: Error inserting part ID 31562: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:17 [error]: Error inserting part ID 31563: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:19 [error]: Error inserting part ID 31564: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:20 [error]: Error inserting part ID 31565: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:21 [error]: Error inserting part ID 31566: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:22 [error]: Error inserting part ID 31567: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:23 [error]: Error inserting part ID 31568: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:24 [error]: Error inserting part ID 31569: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:25 [error]: Error inserting part ID 31570: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:26 [error]: Error inserting part ID 31571: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:27 [error]: Error inserting part ID 31572: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:27 [error]: Error inserting part ID 31573: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:28 [error]: Error inserting part ID 31574: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:29 [error]: Error inserting part ID 31575: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:30 [error]: Error inserting part ID 31576: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 10:40:31 [error]: Error inserting part ID 31577: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:39:04 [error]: Error inserting part ID 31544: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:05 [error]: Error inserting part ID 31545: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:06 [error]: Error inserting part ID 31546: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:07 [error]: Error inserting part ID 31547: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:07 [error]: Error inserting part ID 31548: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:08 [error]: Error inserting part ID 31549: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:09 [error]: Error inserting part ID 31550: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:10 [error]: Error inserting part ID 31551: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:10 [error]: Error inserting part ID 31552: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:11 [error]: Error inserting part ID 31553: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:12 [error]: Error inserting part ID 31554: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:13 [error]: Error inserting part ID 31555: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:14 [error]: Error inserting part ID 31556: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:15 [error]: Error inserting part ID 31557: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:15 [error]: Error inserting part ID 31558: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:16 [error]: Error inserting part ID 31559: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:17 [error]: Error inserting part ID 31560: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:18 [error]: Error inserting part ID 31561: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:19 [error]: Error inserting part ID 31562: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:20 [error]: Error inserting part ID 31563: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:21 [error]: Error inserting part ID 31564: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:21 [error]: Error inserting part ID 31565: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:22 [error]: Error inserting part ID 31566: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:23 [error]: Error inserting part ID 31567: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:24 [error]: Error inserting part ID 31568: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:25 [error]: Error inserting part ID 31569: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:25 [error]: Error inserting part ID 31570: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:26 [error]: Error inserting part ID 31571: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:27 [error]: Error inserting part ID 31572: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:28 [error]: Error inserting part ID 31573: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:29 [error]: Error inserting part ID 31574: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:29 [error]: Error inserting part ID 31575: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:30 [error]: Error inserting part ID 31576: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:31 [error]: Error inserting part ID 31577: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:32 [error]: Error inserting part ID 31578: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:33 [error]: Error inserting part ID 31579: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:33 [error]: Error inserting part ID 31580: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:34 [error]: Error inserting part ID 31581: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:35 [error]: Error inserting part ID 31582: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:36 [error]: Error inserting part ID 31583: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:37 [error]: Error inserting part ID 31584: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:37 [error]: Error inserting part ID 31585: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:38 [error]: Error inserting part ID 31586: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:39 [error]: Error inserting part ID 31587: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:40 [error]: Error inserting part ID 31588: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:41 [error]: Error inserting part ID 31589: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:41 [error]: Error inserting part ID 31590: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:42 [error]: Error inserting part ID 31591: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:43 [error]: Error inserting part ID 31592: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:44 [error]: Error inserting part ID 31593: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:45 [error]: Error inserting part ID 31594: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:46 [error]: Error inserting part ID 31595: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:46 [error]: Error inserting part ID 31596: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:47 [error]: Error inserting part ID 31597: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:48 [error]: Error inserting part ID 31598: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:49 [error]: Error inserting part ID 31599: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:50 [error]: Error inserting part ID 31600: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:51 [error]: Error inserting part ID 31601: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:52 [error]: Error inserting part ID 31602: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:52 [error]: Error inserting part ID 31603: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:53 [error]: Error inserting part ID 31604: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:54 [error]: Error inserting part ID 31605: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:55 [error]: Error inserting part ID 31606: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:56 [error]: Error inserting part ID 31607: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:56 [error]: Error inserting part ID 31608: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:57 [error]: Error inserting part ID 31609: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:58 [error]: Error inserting part ID 31610: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:39:59 [error]: Error inserting part ID 31611: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:00 [error]: Error inserting part ID 31612: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:01 [error]: Error inserting part ID 31613: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:02 [error]: Error inserting part ID 31614: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:03 [error]: Error inserting part ID 31615: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:04 [error]: Error inserting part ID 31616: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:04 [error]: Error inserting part ID 31617: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:05 [error]: Error inserting part ID 31618: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:06 [error]: Error inserting part ID 31619: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:07 [error]: Error inserting part ID 31620: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:08 [error]: Error inserting part ID 31621: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:09 [error]: Error inserting part ID 31622: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:10 [error]: Error inserting part ID 31623: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:11 [error]: Error inserting part ID 31624: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:12 [error]: Error inserting part ID 31625: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:12 [error]: Error inserting part ID 31626: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:40:14 [error]: Error inserting part ID 31627: Converting circular structure to JSON
+    --> starting at object with constructor 'ClientRequest'
+    |     property 'res' -> object with constructor 'IncomingMessage'
+    --- property 'req' closes the circle 
+2025-10-16 14:42:04 [error]: Error inserting part ID 31544: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:05 [error]: Error inserting part ID 31545: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:06 [error]: Error inserting part ID 31546: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:07 [error]: Error inserting part ID 31547: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:08 [error]: Error inserting part ID 31548: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:09 [error]: Error inserting part ID 31549: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:10 [error]: Error inserting part ID 31550: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:10 [error]: Error inserting part ID 31551: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:42:11 [error]: Error inserting part ID 31552: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:05 [error]: Error inserting part ID 31544: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:06 [error]: Error inserting part ID 31545: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:08 [error]: Error inserting part ID 31546: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:08 [error]: Error inserting part ID 31547: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:09 [error]: Error inserting part ID 31548: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:10 [error]: Error inserting part ID 31549: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:45:11 [error]: Error inserting part ID 31550: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:48:05 [error]: Error inserting part ID 31544: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:48:06 [error]: Error inserting part ID 31545: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:48:07 [error]: Error inserting part ID 31546: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:48:08 [error]: Error inserting part ID 31547: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:48:09 [error]: Error inserting part ID 31548: Cannot read properties of undefined (reading 'productCreate') 
+2025-10-16 14:48:10 [error]: Error inserting part ID 31549: Cannot read properties of undefined (reading 'productCreate') 
