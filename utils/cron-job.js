@@ -14,6 +14,7 @@ import axios from "axios";
 import { partsEndpoint } from "./constant.js";
 import { deleteMedias } from "./aws.js";
 import { config } from "../config.js";
+import { GraphQLClient, gql } from "graphql-request";
 
 const formData = new URLSearchParams();
 formData.append("username", config.PARTS_API_USER_NAME);
@@ -120,6 +121,13 @@ const insertSinglePartToShopify = async (part, db) => {
       );
       return;
     }
+    const client = new GraphQLClient(`${config.STORE}admin/api/2024-01/graphql.json`, {
+      headers: {
+        'X-Shopify-Access-Token': config.SHOPIFY_ACCESS_TOKEN,
+        'Content-Type': 'application/json',
+      },
+    });
+    
     const metafields = [
       {
         namespace: "custom",
@@ -173,35 +181,16 @@ const insertSinglePartToShopify = async (part, db) => {
         descriptionHtml: part.notes || "",
         tags: ["parts"],
         metafields,
-        publications: [
-          {
-            publicationId:
-              publicationIdResponse.data.data.publications.edges[0].node.id,
-          },
-        ],
-        variants: [
-          {
-            price: part.original_price || part.price || "0.00",
-            barcode: part.manufacturer_code || "",
-            inventoryManagement: "SHOPIFY",
-            inventoryPolicy: "DENY",
-            ...(part.status === "0" && {
-              inventoryQuantities: {
-                locationId,
-                availableQuantity: 1,
-              },
-            }),
-          },
-        ],
       },
       media: part.part_photo_gallery,
     };
 
-    const productResponse = await shopifyGraphQLRequest({
-      query: productCreate,
-      variables: productInput,
-    });
-
+    // const productResponse = await shopifyGraphQLRequest({
+    //   query: productCreate,
+    //   variables: productInput,
+    // });
+    const productResponse = await client.request(productCreate, productInput);
+    
     if (productResponse.data.data.productCreate.userErrors.length) {
       logger.error(`Unable to store part Id : ${part.id} into shopify.`);
       logger.error("Reason: ", error.message);
@@ -209,6 +198,126 @@ const insertSinglePartToShopify = async (part, db) => {
     }
 
     const product = productResponse.data.data.productCreate.product;
+
+    const variant = product.variants.edges[0].node;
+
+    const variantId = variant.id;
+    
+    const inventoryItemId = variant.inventoryItem.id;
+
+    console.log("✅ Created product:", product.id);
+    console.log("🧩 Default variant:", variantId);
+    console.log("📦 Inventory item:", inventoryItemId);
+
+    // 2️⃣ UPDATE VARIANT DETAILS
+    const updateVariantMutation = gql`
+          mutation productVariantsBulkUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+            productVariantsBulkUpdate(productId: $productId, variants: $variants) {
+              productVariants {
+                id
+                price
+                barcode
+                inventoryPolicy
+              }
+              userErrors {
+                field
+                message
+              }
+            }
+          }
+        `;
+
+    const updateVariantRes = await client.request(updateVariantMutation, {
+      productId: product.id,
+      variants: [
+        {
+          id: variantId,
+          price: part.price || "10.00",
+          barcode: part.manufacturer_code || "1234567890123",
+          inventoryPolicy: "DENY",
+        },
+      ],
+    });
+
+    if (updateVariantRes.productVariantsBulkUpdate.userErrors?.length) {
+      console.error("⚠️ Variant update errors:", updateVariantRes.productVariantsBulkUpdate.userErrors);
+    } else {
+      console.log("✅ Variant updated successfully:", updateVariantRes.productVariantsBulkUpdate.productVariants[0]);
+    }
+
+    if (part.status === "0") {
+      const updateInventoryMutation = gql`
+    mutation inventoryItemUpdate($id: ID!, $input: InventoryItemInput!) {
+      inventoryItemUpdate(id: $id, input: $input) {
+        inventoryItem {
+          id
+          tracked
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+      const inventoryRes = await client.request(updateInventoryMutation, {
+        id: inventoryItemId,
+        input: {
+          tracked: true, // enable tracking
+        },
+      });
+
+      if (inventoryRes.inventoryItemUpdate.userErrors?.length) {
+        console.error("⚠️ Inventory update errors:", inventoryRes.inventoryItemUpdate.userErrors);
+      } else {
+        console.log("📦 Inventory tracking enabled:", inventoryRes.inventoryItemUpdate.inventoryItem);
+      }
+
+      const setQtyMutation = `
+    mutation inventorySetOnHandQuantities($input: InventorySetOnHandQuantitiesInput!) {
+      inventorySetOnHandQuantities(input: $input) {
+        inventoryLevels {
+          available
+          location {
+            id
+          }
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+      const setQtyVariables = {
+        input: {
+          reason: "stock_correction",
+          setQuantities: [
+            {
+              inventoryItemId: product.variants.edges[0].node.inventoryItem.id,
+              locationId: locationId,
+              quantity: 1,
+            },
+          ],
+        },
+      };
+
+      const qtyResponse = await shopifyGraphQLRequest({
+        query: setQtyMutation,
+        variables: setQtyVariables,
+      });
+
+      if (qtyResponse.inventorySetOnHandQuantities.userErrors?.length) {
+        console.error("⚠️ Quantity set error:", qtyResponse.inventorySetOnHandQuantities.userErrors);
+      } else {
+        console.log("✅ Quantity set to 1 successfully!");
+      }
+
+    }
+
+    console.log("🎉 Product setup complete!");
 
     const metafieldValues = metafields.reduce((acc, field) => {
       acc[field.key] = field.value;
@@ -322,22 +431,18 @@ async function updatePartInShopify(part, existingEntry, db) {
         media: part.part_photo_gallery,
       };
 
-      console.log("🧾 Shopify Product Update Payload (for Postman):");
-      console.log(
-        JSON.stringify(
-          {
-            query: productUpdate,
-            variables: productUpdateVariables,
-          },
-          null,
-          2
-        )
-      );
-
       const productResponse = await shopifyGraphQLRequest({
         query: productUpdate,
         variables: productUpdateVariables,
       });
+
+      const locationResponse = await shopifyGraphQLRequest({
+        query: getLocation(),
+        variables: {},
+      });
+
+      const locationId = locationResponse.data.data.locations.edges[0].node.id;
+
 
       // Update variant separately
       await shopifyGraphQLRequest({
@@ -361,6 +466,12 @@ async function updatePartInShopify(part, existingEntry, db) {
             id: existingEntry.variants.edges[0].node.id,
             price: part.original_price || part.price || "0.00",
             barcode: part.manufacturer_code || "",
+            ...(part.status === "0" && {
+              inventoryQuantities: {
+                locationId,
+                availableQuantity: 1,
+              },
+            }),
           },
         },
       });
