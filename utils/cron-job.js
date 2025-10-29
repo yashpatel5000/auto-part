@@ -127,7 +127,7 @@ const insertSinglePartToShopify = async (part, db) => {
         'Content-Type': 'application/json',
       },
     });
-    
+
     const metafields = [
       {
         namespace: "custom",
@@ -190,7 +190,7 @@ const insertSinglePartToShopify = async (part, db) => {
     //   variables: productInput,
     // });
     const productResponse = await client.request(productCreate, productInput);
-    
+
     if (productResponse.data.data.productCreate.userErrors.length) {
       logger.error(`Unable to store part Id : ${part.id} into shopify.`);
       logger.error("Reason: ", error.message);
@@ -202,7 +202,7 @@ const insertSinglePartToShopify = async (part, db) => {
     const variant = product.variants.edges[0].node;
 
     const variantId = variant.id;
-    
+
     const inventoryItemId = variant.inventoryItem.id;
 
     console.log("✅ Created product:", product.id);
@@ -274,43 +274,50 @@ const insertSinglePartToShopify = async (part, db) => {
         console.log("📦 Inventory tracking enabled:", inventoryRes.inventoryItemUpdate.inventoryItem);
       }
 
-      const setQtyMutation = `
-    mutation inventorySetOnHandQuantities($input: InventorySetOnHandQuantitiesInput!) {
-      inventorySetOnHandQuantities(input: $input) {
-        inventoryLevels {
-          available
-          location {
-            id
+      const setQtyMutation = gql`
+      mutation inventoryAdjustQuantities($input: InventoryAdjustQuantitiesInput!) {
+        inventoryAdjustQuantities(input: $input) {
+          inventoryAdjustmentGroup {
+            reason
+            changes {
+              name
+              delta
+              quantityAfterChange
+              item {
+                id
+              }
+              location {
+                id
+                name
+              }
+            }
+          }
+          userErrors {
+            field
+            message
           }
         }
-        userErrors {
-          field
-          message
-        }
       }
-    }
-  `;
+    `;
 
       const setQtyVariables = {
         input: {
-          reason: "stock_correction",
-          setQuantities: [
+          reason: "correction", // can be 'correction', 'damage', 'theft', etc.
+          name: "available", // optional label
+          changes: [
             {
-              inventoryItemId: product.variants.edges[0].node.inventoryItem.id,
+              inventoryItemId: inventoryItemId,
               locationId: locationId,
-              quantity: 1,
+              delta: 1,
             },
           ],
         },
       };
 
-      const qtyResponse = await shopifyGraphQLRequest({
-        query: setQtyMutation,
-        variables: setQtyVariables,
-      });
+      const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
 
-      if (qtyResponse.inventorySetOnHandQuantities.userErrors?.length) {
-        console.error("⚠️ Quantity set error:", qtyResponse.inventorySetOnHandQuantities.userErrors);
+      if (qtyResponse.inventoryAdjustQuantities.userErrors?.length) {
+        console.error("⚠️ Quantity set error:", qtyResponse.inventoryAdjustQuantities.userErrors);
       } else {
         console.log("✅ Quantity set to 1 successfully!");
       }
