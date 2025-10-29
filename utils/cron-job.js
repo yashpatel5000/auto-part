@@ -191,13 +191,13 @@ const insertSinglePartToShopify = async (part, db) => {
     // });
     const productResponse = await client.request(productCreate, productInput);
 
-    if (productResponse.data.data.productCreate.userErrors.length) {
+    if (productResponse.productCreate.userErrors.length) {
       logger.error(`Unable to store part Id : ${part.id} into shopify.`);
       logger.error("Reason: ", error.message);
       throw new Error(`Unable to store part Id : ${part.id}`);
     }
 
-    const product = productResponse.data.data.productCreate.product;
+    const product = productResponse.productCreate.product;
 
     const variant = product.variants.edges[0].node;
 
