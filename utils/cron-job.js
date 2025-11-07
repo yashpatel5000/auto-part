@@ -573,7 +573,7 @@ async function updatePartInShopify(part, existingEntry, db) {
         //       console.log("✅ Quantity set to 1 successfully!");
         //     }
 
-        const setQtyMutation = gql`
+const setQtyMutation = gql`
   mutation inventorySetQuantities($input: InventorySetQuantitiesInput!) {
     inventorySetQuantities(input: $input) {
       inventoryAdjustmentGroup {
@@ -593,27 +593,27 @@ async function updatePartInShopify(part, existingEntry, db) {
   }
 `;
 
-        const setQtyVariables = {
-          input: {
-            reason: "correction",
-            name: "available",
-            changes: [
-              {
-                inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
-                locationId: locationId,
-                quantity: 1, // ✅ always set to 1 (not delta)
-              },
-            ],
-          },
-        };
+const setQtyVariables = {
+  input: {
+    reason: "correction",
+    name: "available",
+    quantities: [
+      {
+        inventoryItemId: inventoryItemId,
+        locationId: locationId,
+        quantity: 1, // ✅ Always set to 1
+      },
+    ],
+  },
+};
 
-        const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
+const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
 
-        if (qtyResponse.inventorySetQuantities.userErrors?.length) {
-          console.error("⚠️ Quantity set error:", qtyResponse.inventorySetQuantities.userErrors);
-        } else {
-          console.log("✅ Quantity set to 1 successfully!");
-        }
+if (qtyResponse.inventorySetQuantities.userErrors?.length) {
+  console.error("⚠️ Quantity set error:", qtyResponse.inventorySetQuantities.userErrors);
+} else {
+  console.log("✅ Quantity set to 1 successfully!");
+}
 
 
       }
