@@ -491,7 +491,7 @@ async function updatePartInShopify(part, existingEntry, db) {
       });
 
       if (updateVariantRes.productVariantsBulkUpdate.userErrors?.length) {
-        console.error("⚠️ Variant update errors:", updateVariantRes.productVariantsBulkUpdate.userErrors);
+        logger.error("⚠️ Variant update errors:", updateVariantRes.productVariantsBulkUpdate.userErrors);
       } else {
         console.log("✅ Variant updated successfully:", updateVariantRes.productVariantsBulkUpdate.productVariants[0]);
       }
@@ -618,9 +618,9 @@ export const scheduleDailyJob = async () => {
 
     const allAPIIds = new Set();
     const limit = 100;
-    let totalPages = 1; // Default to 1, will update after first API call
+    let totalPages = 318; // Default to 1, will update after first API call
 
-    for (let page = 1; page <= totalPages; page++) {
+    for (let page = 318; page <= totalPages; page++) {
       try {
         const response = await axios.post(partsEndpoint, formData, {
           params: { page, limit },
