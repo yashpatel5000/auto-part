@@ -354,6 +354,13 @@ async function updatePartInShopify(part, existingEntry, db) {
   try {
     let imageProcessing = null;
 
+    const client = new GraphQLClient(`${config.STORE}admin/api/2024-01/graphql.json`, {
+      headers: {
+        'X-Shopify-Access-Token': config.SHOPIFY_ACCESS_TOKEN,
+        'Content-Type': 'application/json',
+      },
+    });
+
     // Step 1: Process images
     if (part?.part_photo_gallery?.length || part?.photo) {
       imageProcessing = await processImage(part);
