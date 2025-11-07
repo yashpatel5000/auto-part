@@ -597,6 +597,7 @@ const setQtyVariables = {
   input: {
     reason: "correction",
     name: "available",
+        ignoreCompareQuantity: true, // 👈 tells Shopify to skip validation
     quantities: [
       {
         inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
