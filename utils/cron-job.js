@@ -175,12 +175,16 @@ const insertSinglePartToShopify = async (part, db) => {
       variables: {},
     });
 
+
+    const actualPrice = part.original_price || part.price;
+
     const productInput = {
       input: {
         title: part.name || "No Title",
         descriptionHtml: part.notes || "",
         tags: ["parts"],
         metafields,
+        status: actualPrice === "0" ? "DRAFT" : "ACTIVE",
       },
       media: part.part_photo_gallery,
     };
@@ -573,7 +577,7 @@ async function updatePartInShopify(part, existingEntry, db) {
         //       console.log("✅ Quantity set to 1 successfully!");
         //     }
 
-const setQtyMutation = gql`
+        const setQtyMutation = gql`
   mutation inventorySetQuantities($input: InventorySetQuantitiesInput!) {
     inventorySetQuantities(input: $input) {
       inventoryAdjustmentGroup {
@@ -593,28 +597,28 @@ const setQtyMutation = gql`
   }
 `;
 
-const setQtyVariables = {
-  input: {
-    reason: "correction",
-    name: "available",
-        ignoreCompareQuantity: true, // 👈 tells Shopify to skip validation
-    quantities: [
-      {
-        inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
-        locationId: locationId,
-        quantity: 1, // ✅ Always set to 1
-      },
-    ],
-  },
-};
+        const setQtyVariables = {
+          input: {
+            reason: "correction",
+            name: "available",
+            ignoreCompareQuantity: true, // 👈 tells Shopify to skip validation
+            quantities: [
+              {
+                inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
+                locationId: locationId,
+                quantity: 1, // ✅ Always set to 1
+              },
+            ],
+          },
+        };
 
-const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
+        const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
 
-if (qtyResponse.inventorySetQuantities.userErrors?.length) {
-  console.error("⚠️ Quantity set error:", qtyResponse.inventorySetQuantities.userErrors);
-} else {
-  console.log("✅ Quantity set to 1 successfully!");
-}
+        if (qtyResponse.inventorySetQuantities.userErrors?.length) {
+          console.error("⚠️ Quantity set error:", qtyResponse.inventorySetQuantities.userErrors);
+        } else {
+          console.log("✅ Quantity set to 1 successfully!");
+        }
 
 
       }
@@ -662,9 +666,9 @@ export const scheduleDailyJob = async () => {
 
     const allAPIIds = new Set();
     const limit = 100;
-    let totalPages = 318; // Default to 1, will update after first API call
+    let totalPages = 1; // Default to 1, will update after first API call
 
-    for (let page = 318; page <= totalPages; page++) {
+    for (let page = 1; page <= totalPages; page++) {
       try {
         const response = await axios.post(partsEndpoint, formData, {
           params: { page, limit },
@@ -702,27 +706,27 @@ export const scheduleDailyJob = async () => {
     }
 
     // Handle deleted parts
-    // const deletedParts = syncedParts.filter(
-    //   (p) => !allAPIIds.has(p.rrr_partId)
-    // );
-    // for (const deleted of deletedParts) {
-    //   try {
-    //     await shopifyGraphQLRequest({
-    //       query: productUpdate,
-    //       variables: {
-    //         input: {
-    //           id: deleted.id,
-    //           status: "DRAFT",
-    //         },
-    //       },
-    //     });
-    //     logger.info(`⚠️ Part deleted in API: ${deleted.rrr_partId}`);
-    //   } catch (error) {
-    //     logger.error(
-    //       `Error marking part ${deleted.rrr_partId} as DRAFT: ${error.message}`
-    //     );
-    //   }
-    // }
+    const deletedParts = syncedParts.filter(
+      (p) => !allAPIIds.has(p.rrr_partId)
+    );
+    for (const deleted of deletedParts) {
+      try {
+        await shopifyGraphQLRequest({
+          query: productUpdate,
+          variables: {
+            input: {
+              id: deleted.id,
+              status: "DRAFT",
+            },
+          },
+        });
+        logger.info(`⚠️ Part deleted in API: ${deleted.rrr_partId}`);
+      } catch (error) {
+        logger.error(
+          `Error marking part ${deleted.rrr_partId} as DRAFT: ${error.message}`
+        );
+      }
+    }
   } catch (error) {
     logger.error(`Fatal error in scheduleDailyJob: ${error.message}`);
   }
