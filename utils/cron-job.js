@@ -599,7 +599,7 @@ async function updatePartInShopify(part, existingEntry, db) {
             name: "available",
             changes: [
               {
-                inventoryItemId: inventoryItemId,
+                inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
                 locationId: locationId,
                 quantity: 1, // ✅ always set to 1 (not delta)
               },
