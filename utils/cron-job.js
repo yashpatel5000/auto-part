@@ -658,27 +658,27 @@ export const scheduleDailyJob = async () => {
     }
 
     // Handle deleted parts
-    const deletedParts = syncedParts.filter(
-      (p) => !allAPIIds.has(p.rrr_partId)
-    );
-    for (const deleted of deletedParts) {
-      try {
-        await shopifyGraphQLRequest({
-          query: productUpdate,
-          variables: {
-            input: {
-              id: deleted.id,
-              status: "DRAFT",
-            },
-          },
-        });
-        logger.info(`⚠️ Part deleted in API: ${deleted.rrr_partId}`);
-      } catch (error) {
-        logger.error(
-          `Error marking part ${deleted.rrr_partId} as DRAFT: ${error.message}`
-        );
-      }
-    }
+    // const deletedParts = syncedParts.filter(
+    //   (p) => !allAPIIds.has(p.rrr_partId)
+    // );
+    // for (const deleted of deletedParts) {
+    //   try {
+    //     await shopifyGraphQLRequest({
+    //       query: productUpdate,
+    //       variables: {
+    //         input: {
+    //           id: deleted.id,
+    //           status: "DRAFT",
+    //         },
+    //       },
+    //     });
+    //     logger.info(`⚠️ Part deleted in API: ${deleted.rrr_partId}`);
+    //   } catch (error) {
+    //     logger.error(
+    //       `Error marking part ${deleted.rrr_partId} as DRAFT: ${error.message}`
+    //     );
+    //   }
+    // }
   } catch (error) {
     logger.error(`Fatal error in scheduleDailyJob: ${error.message}`);
   }
