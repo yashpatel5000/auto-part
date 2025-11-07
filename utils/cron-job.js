@@ -232,8 +232,8 @@ const insertSinglePartToShopify = async (part, db) => {
       variants: [
         {
           id: variantId,
-          price: part.price || "10.00",
-          barcode: part.manufacturer_code || "1234567890123",
+          price: part.price || "0",
+          barcode: part.manufacturer_code || "",
           inventoryPolicy: "DENY",
         },
       ],
