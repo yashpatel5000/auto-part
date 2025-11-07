@@ -427,13 +427,16 @@ async function updatePartInShopify(part, existingEntry, db) {
       part?.part_photo_gallery?.length ||
       part?.photo
     ) {
+
+      const actualPrice = part.original_price || part.price;
+
       const productUpdateVariables = {
         input: {
           id: existingEntry.id,
           metafields,
           title: part.name || "No Title",
           descriptionHtml: part.notes || "",
-          status: "ACTIVE",
+          status: actualPrice === "0" ? "DRAFT" : "ACTIVE",
         },
         media: part.part_photo_gallery,
       };
@@ -450,16 +453,15 @@ async function updatePartInShopify(part, existingEntry, db) {
 
       const locationId = locationResponse.data.data.locations.edges[0].node.id;
 
-
-      // Update variant separately
-      await shopifyGraphQLRequest({
-        query: `
-          mutation productVariantUpdate($input: ProductVariantInput!) {
-            productVariantUpdate(input: $input) {
-              productVariant {
+      // 2️⃣ UPDATE VARIANT DETAILS
+      const updateVariantMutation = gql`
+          mutation productVariantsBulkUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+            productVariantsBulkUpdate(productId: $productId, variants: $variants) {
+              productVariants {
                 id
                 price
                 barcode
+                inventoryPolicy
               }
               userErrors {
                 field
@@ -467,21 +469,104 @@ async function updatePartInShopify(part, existingEntry, db) {
               }
             }
           }
-        `,
-        variables: {
-          input: {
+        `;
+
+      const updateVariantRes = await client.request(updateVariantMutation, {
+        productId: existingEntry.id,
+        variants: [
+          {
             id: existingEntry.variants.edges[0].node.id,
             price: part.original_price || part.price || "0.00",
             barcode: part.manufacturer_code || "",
-            ...(part.status === "0" && {
-              inventoryQuantities: {
-                locationId,
-                availableQuantity: 1,
-              },
-            }),
+            inventoryPolicy: "DENY",
           },
-        },
+        ],
       });
+
+      if (updateVariantRes.productVariantsBulkUpdate.userErrors?.length) {
+        console.error("⚠️ Variant update errors:", updateVariantRes.productVariantsBulkUpdate.userErrors);
+      } else {
+        console.log("✅ Variant updated successfully:", updateVariantRes.productVariantsBulkUpdate.productVariants[0]);
+      }
+
+      if (part.status === "0") {
+        const updateInventoryMutation = gql`
+    mutation inventoryItemUpdate($id: ID!, $input: InventoryItemInput!) {
+      inventoryItemUpdate(id: $id, input: $input) {
+        inventoryItem {
+          id
+          tracked
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+        const inventoryRes = await client.request(updateInventoryMutation, {
+          id: existingEntry.variants.edges[0].node.inventoryItem.id,
+          input: {
+            tracked: true, // enable tracking
+          },
+        });
+
+        if (inventoryRes.inventoryItemUpdate.userErrors?.length) {
+          console.error("⚠️ Inventory update errors:", inventoryRes.inventoryItemUpdate.userErrors);
+        } else {
+          console.log("📦 Inventory tracking enabled:", inventoryRes.inventoryItemUpdate.inventoryItem);
+        }
+
+        const setQtyMutation = gql`
+      mutation inventoryAdjustQuantities($input: InventoryAdjustQuantitiesInput!) {
+        inventoryAdjustQuantities(input: $input) {
+          inventoryAdjustmentGroup {
+            reason
+            changes {
+              name
+              delta
+              quantityAfterChange
+              item {
+                id
+              }
+              location {
+                id
+                name
+              }
+            }
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `;
+
+        const setQtyVariables = {
+          input: {
+            reason: "correction", // can be 'correction', 'damage', 'theft', etc.
+            name: "available", // optional label
+            changes: [
+              {
+                inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
+                locationId: locationId,
+                delta: 1,
+              },
+            ],
+          },
+        };
+
+        const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
+
+        if (qtyResponse.inventoryAdjustQuantities.userErrors?.length) {
+          console.error("⚠️ Quantity set error:", qtyResponse.inventoryAdjustQuantities.userErrors);
+        } else {
+          console.log("✅ Quantity set to 1 successfully!");
+        }
+
+      }
 
       // Step 5: Update DB
       let metafieldForDB = { ...existingEntry.metafields };
