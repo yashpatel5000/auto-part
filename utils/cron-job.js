@@ -599,7 +599,7 @@ const setQtyVariables = {
     name: "available",
     quantities: [
       {
-        inventoryItemId: inventoryItemId,
+        inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
         locationId: locationId,
         quantity: 1, // ✅ Always set to 1
       },
