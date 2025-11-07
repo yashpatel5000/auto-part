@@ -525,41 +525,83 @@ async function updatePartInShopify(part, existingEntry, db) {
           console.log("📦 Inventory tracking enabled:", inventoryRes.inventoryItemUpdate.inventoryItem);
         }
 
+        //     const setQtyMutation = gql`
+        //   mutation inventoryAdjustQuantities($input: InventoryAdjustQuantitiesInput!) {
+        //     inventoryAdjustQuantities(input: $input) {
+        //       inventoryAdjustmentGroup {
+        //         reason
+        //         changes {
+        //           name
+        //           delta
+        //           quantityAfterChange
+        //           item {
+        //             id
+        //           }
+        //           location {
+        //             id
+        //             name
+        //           }
+        //         }
+        //       }
+        //       userErrors {
+        //         field
+        //         message
+        //       }
+        //     }
+        //   }
+        // `;
+
+        //     const setQtyVariables = {
+        //       input: {
+        //         reason: "correction", // can be 'correction', 'damage', 'theft', etc.
+        //         name: "available", // optional label
+        //         changes: [
+        //           {
+        //             inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
+        //             locationId: locationId,
+        //             delta: 1,
+        //           },
+        //         ],
+        //       },
+        //     };
+
+        //     const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
+
+        //     if (qtyResponse.inventoryAdjustQuantities.userErrors?.length) {
+        //       console.error("⚠️ Quantity set error:", qtyResponse.inventoryAdjustQuantities.userErrors);
+        //     } else {
+        //       console.log("✅ Quantity set to 1 successfully!");
+        //     }
+
         const setQtyMutation = gql`
-      mutation inventoryAdjustQuantities($input: InventoryAdjustQuantitiesInput!) {
-        inventoryAdjustQuantities(input: $input) {
-          inventoryAdjustmentGroup {
-            reason
-            changes {
-              name
-              delta
-              quantityAfterChange
-              item {
-                id
-              }
-              location {
-                id
-                name
-              }
-            }
-          }
-          userErrors {
-            field
-            message
-          }
+  mutation inventorySetQuantities($input: InventorySetQuantitiesInput!) {
+    inventorySetQuantities(input: $input) {
+      inventoryAdjustmentGroup {
+        reason
+        changes {
+          name
+          quantityAfterChange
+          item { id }
+          location { id name }
         }
       }
-    `;
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
 
         const setQtyVariables = {
           input: {
-            reason: "correction", // can be 'correction', 'damage', 'theft', etc.
-            name: "available", // optional label
+            reason: "correction",
+            name: "available",
             changes: [
               {
-                inventoryItemId: existingEntry.variants.edges[0].node.inventoryItem.id,
+                inventoryItemId: inventoryItemId,
                 locationId: locationId,
-                delta: 1,
+                quantity: 1, // ✅ always set to 1 (not delta)
               },
             ],
           },
@@ -567,11 +609,12 @@ async function updatePartInShopify(part, existingEntry, db) {
 
         const qtyResponse = await client.request(setQtyMutation, setQtyVariables);
 
-        if (qtyResponse.inventoryAdjustQuantities.userErrors?.length) {
-          console.error("⚠️ Quantity set error:", qtyResponse.inventoryAdjustQuantities.userErrors);
+        if (qtyResponse.inventorySetQuantities.userErrors?.length) {
+          console.error("⚠️ Quantity set error:", qtyResponse.inventorySetQuantities.userErrors);
         } else {
           console.log("✅ Quantity set to 1 successfully!");
         }
+
 
       }
 
