@@ -4,4 +4,4 @@ node_modules/
 
 logs/
 
-.config
+.config*.swp
