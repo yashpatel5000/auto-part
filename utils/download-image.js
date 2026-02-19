@@ -1,7 +1,14 @@
 import puppeteer from "puppeteer";
 import { uploadBufferToS3 } from "./aws.js";
 import { SIGNED_URL_CONTENT_TYPE } from "./constant.js";
+import { config } from "../config.js";
 import logger from "./logger.js";
+
+const getContentType = (url) => {
+  const cleanUrl = url.split("?")[0];
+  const ext = cleanUrl.split(".").pop().toUpperCase();
+  return SIGNED_URL_CONTENT_TYPE[ext] || "image/jpeg";
+};
 
 const downloadImage = async (url) => {
   let browser;
@@ -25,32 +32,24 @@ const downloadImage = async (url) => {
     const response = await page.goto(url, { waitUntil: "networkidle2" });
 
     if (!response || response.status() !== 200) {
-      logger.error(
-        "❌ Failed to load image:",
-        response ? response.status() : "no response"
-      );
-      await browser.close();
-      throw new Error("Failed to load image : 403");
+      const status = response ? response.status() : "no response";
+      logger.error(`❌ Failed to load image (${status}): ${url}`);
+      throw new Error(`Failed to load image: HTTP ${status}`);
     }
 
     const buffer = await response.buffer();
 
-    await uploadBufferToS3(
-      buffer,
-      fileName,
-      SIGNED_URL_CONTENT_TYPE[url.split(".").pop()]
-    );
+    await uploadBufferToS3(buffer, fileName, getContentType(url));
 
-    return {
-      filePath: `https://auto-part.s3.eu-north-1.amazonaws.com/${fileName}`,
-      fileName,
-    };
+    const filePath = `https://${config.AWS_S3_BUCKET_NAME}.s3.${config.AWS_REGION}.amazonaws.com/${fileName}`;
+
+    return { filePath, fileName };
   } catch (error) {
-    logger.error("Failed to load image : 403");
+    logger.error(`Failed to download image from ${url}: ${error.message}`);
     throw error;
   } finally {
-    if(browser){
-      await browser.close()
+    if (browser) {
+      await browser.close();
     }
   }
 };

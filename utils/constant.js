@@ -1,6 +1,10 @@
 export const SIGNED_URL_CONTENT_TYPE = {
-    "JPEG" : "image/jpeg",
-}
+  JPG: "image/jpeg",
+  JPEG: "image/jpeg",
+  PNG: "image/png",
+  WEBP: "image/webp",
+  GIF: "image/gif",
+};
 
 export const partsEndpoint = "https://api.rrr.lt/v2/get/parts";
 

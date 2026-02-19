@@ -13,6 +13,8 @@ const dailyRotateTransport = new DailyRotateFile({
   filename: "logs/%DATE%-combined.log",
   datePattern: "YYYY-MM-DD",
   zippedArchive: true,
+  maxSize: "20m",
+  maxFiles: "30d",
   level: "info",
 });
 
@@ -20,6 +22,8 @@ const errorRotateTransport = new DailyRotateFile({
   filename: "logs/%DATE%-error.log",
   datePattern: "YYYY-MM-DD",
   zippedArchive: true,
+  maxSize: "20m",
+  maxFiles: "60d",
   level: "error",
 });
 

@@ -2,10 +2,12 @@ import axios from "axios";
 import { config } from "../config.js";
 import logger from "./logger.js";
 
+const shopifyEndpoint = `${config.STORE.replace(/\/$/, "")}/admin/api/2024-10/graphql.json`;
+
 export const shopifyGraphQLRequest = async (body) => {
   try {
     const response = await axios.post(
-      `${config.STORE}/admin/api/2024-01/graphql.json`,
+      shopifyEndpoint,
       JSON.stringify(body),
       {
         headers: {
@@ -16,7 +18,7 @@ export const shopifyGraphQLRequest = async (body) => {
     );
     return response;
   } catch (error) {
-    logger.error("Shopify GraphQL Error:", error.response?.data || error.message);
+    logger.error(`Shopify GraphQL Error: ${error.response?.data ? JSON.stringify(error.response.data) : error.message}`);
     throw error;
   }
 }

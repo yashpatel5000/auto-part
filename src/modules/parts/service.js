@@ -203,8 +203,8 @@ export async function insertDataIntoShopify() {
           });
 
           if (productResponse.data.data.productCreate.userErrors.length) {
-            logger.error(`Unable to store part Id : ${part.id} into shopify.`);
-            logger.error("Reason: ", error.message);
+            const errs = JSON.stringify(productResponse.data.data.productCreate.userErrors);
+            logger.error(`Unable to store part Id ${part.id}: ${errs}`);
             continue;
           }
 

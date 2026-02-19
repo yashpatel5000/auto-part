@@ -31,41 +31,6 @@ export const productCreate = `
         }
     }`;
 
-export const createVariantQuery = `
-    mutation productVariantsBulkCreate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
-        productVariantsBulkCreate(productId: $productId, variants: $variants) {
-            productVariants {
-                id
-                price
-                barcode
-                inventoryItem{
-                    id
-                }
-            }
-            userErrors {
-                field
-                message
-            }
-        }
-    }`;
-
-export const updateVariantQuery = `
-    mutation productVariantsBulkUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
-        productVariantsBulkUpdate(productId: $productId, variants: $variants) {
-            productVariants {
-                id
-                price
-                barcode
-                inventoryItem{
-                    id
-                }
-            }
-            userErrors {
-                field
-                message
-            }
-        }
-    }`;
 
 export const productUpdate = `
     mutation productUpdate($input: ProductInput!,$media: [CreateMediaInput!]) {

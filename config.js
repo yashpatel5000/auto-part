@@ -1,15 +1,13 @@
-// src/config.js
-import dotenvSafe from 'dotenv-safe';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import dotenvSafe from "dotenv-safe";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load .env from custom location
 dotenvSafe.config({
-  path: path.resolve(__dirname, '.config/.env'),
-  example: path.resolve(__dirname, '.env.example'), // <- this is now correct
+  path: path.resolve(__dirname, ".config/.env"),
+  example: path.resolve(__dirname, ".env.example"),
 });
 
 export const config = {
@@ -23,8 +21,9 @@ export const config = {
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   AWS_REGION: process.env.AWS_REGION,
   AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
-  CRON_JOB_ENABLED: process.env.CRON_JOB_ENABLED.toString() === "false" ? false : true ,
+  CRON_JOB_ENABLED: process.env.CRON_JOB_ENABLED?.toString() !== "false",
   CRON_EXPRESSION: process.env.CRON_EXPRESSION,
+  CRON_EXPRESSION_FOR_MEDIA_DELETION: process.env.CRON_EXPRESSION_FOR_MEDIA_DELETION,
   STORE: process.env.STORE,
-  CRON_EXPRESSION_FOR_MEDIA_DELETION: process.env.CRON_EXPRESSION_FOR_MEDIA_DELETION
+  WEBHOOK_SECRET: process.env.WEBHOOK_SECRET,
 };
