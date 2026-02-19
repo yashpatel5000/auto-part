@@ -1,0 +1,8 @@
+2026-02-19 11:24:24 [info]: App started. 
+2026-02-19 11:27:59 [info]: App started on port 3000. 
+2026-02-19 12:00:00 [info]: Media deletion cron started at: Thu, 19 Feb 2026 12:00:00 GMT 
+2026-02-19 12:00:00 [info]: Media deletion cron ended at: Thu, 19 Feb 2026 12:00:00 GMT 
+2026-02-19 12:51:18 [info]: ✅ MongoDB Connected: cluster0-shard-00-01.1avus.mongodb.net 
+2026-02-19 12:54:44 [info]: SIGINT received. Shutting down gracefully. 
+2026-02-19 12:54:45 [info]: App started. 
+2026-02-19 12:55:08 [info]: ✅ MongoDB Connected: cluster0-shard-00-01.1avus.mongodb.net 

@@ -1,6 +1,7 @@
 import express from "express";
 import { insertDataIntoShopify } from "./src/modules/parts/service.js";
 import webhookRouter from "./src/modules/webhook/route.js";
+import dbViewRouter from "./src/modules/db-view/route.js";
 import logger from "./utils/logger.js";
 import cron from "node-cron";
 import { scheduleDailyJob } from "./utils/cron-job.js";
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.json());
 app.use(webhookRouter);
+app.use(dbViewRouter);
 
 app.listen(3000, async () => {
   try {
